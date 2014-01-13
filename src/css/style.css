@@ -1,0 +1,256 @@
+@font-face {
+	font-family: Roboto;
+	src: local("Roboto"),
+	     url(../fonts/Roboto-Regular.ttf);
+}
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.0.3');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+html{
+	font-family: Roboto, sans-serif;
+	cursor: default;
+	-webkit-user-select: none;
+	min-width: 500px;
+	min-height: 500px;
+}
+body{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	color: #333647;
+	overflow: hidden;
+	background-color: #F4F4F4;
+}
+header, footer, body, html, div, input{
+	-webkit-box-sizing: border-box;
+}
+
+/* Основное */
+	header{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		padding: 4px;
+		text-align: center;
+	}
+
+	#navHome{
+		position: absolute;
+		left: 0;
+		top: 29px;
+		width: 60px;
+		height: 72px;
+		background-color: #45B7AF;
+		color: #F4F4F4;
+	}
+	#navHome:hover{
+		background-color: #50d4ca;
+	}
+	
+	nav{
+		position: absolute;
+		left: 0;
+		top: 101px;
+		width: 60px;
+		height: 100%;
+		background-color: #333647;
+		color: #F4F4F4;
+		transition: all .3s;
+		z-index: 1;
+	}
+	nav:hover{
+		width: 230px;
+	}
+	nav div,
+	#navHome{
+		cursor: pointer;
+		padding: 18px;
+		transition: all .3s;
+		overflow: hidden;
+	}
+	nav div:hover{
+		background-color: #4c506a;
+	}
+
+	nav div .name{
+		margin-left: 60px;
+		line-height: 2;
+		vertical-align: middle;
+	}
+
+	/* Иконки в меню навигации */
+		#navHome,
+		nav .icon{
+			font-family: 'FontAwesome';
+			font-size: 20pt;
+			line-height: 1.3;
+			vertical-align: middle;
+			position: absolute;
+		}
+
+		#navHome:after{
+			content: "\f015";
+		}
+		nav .info:after{
+			content: "\f05a";
+		}
+		nav .file:after{
+			content: "\f07c";
+		}
+	/* /Иконки в меню навигации */
+
+	#content{
+		display: none;
+		position: absolute;
+		top: 29px;
+		left: 60px;
+		right: 0;
+		bottom: 0;
+	}
+	#content h2{
+		background-color: #FFF;
+		padding: 20px;
+		box-shadow: 0 1px 0 0 #e6e6e6;
+		margin: 0;
+		font-weight: normal;
+	}
+
+	#dragPlace{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 80px;
+		height: 30px;
+		-webkit-app-region: drag;
+	}
+
+	/* Кнопки управления окном */
+		.closeApp:after{
+			content: "\f00d";
+			right: 6px;
+			line-height: 1.5;
+		}
+		.maximizeApp:after{
+			content: "\f065";
+			right: 30px;
+			line-height: 1.6;
+		}
+		.unmaximizeApp:after{
+			content: "\f066";
+			right: 30px;
+			line-height: 1.6;
+		}
+		.minimizeApp:after{
+			content: "\f068";
+			right: 54px;
+			line-height: 2.3;
+		}
+
+		.closeApp:after,
+		.maximizeApp:after,
+		.unmaximizeApp:after,
+		.minimizeApp:after{
+			font-family: 'FontAwesome';
+			font-size: 10pt;
+			color: #D5D5D5;
+			position: absolute;
+			top: 4px;
+			z-index: 2;
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			border-radius: 50%;
+			transition: all .3s;
+		}
+		.closeApp:hover:after,
+		.maximizeApp:hover:after,
+		.unmaximizeApp:hover:after,
+		.minimizeApp:hover:after{
+			background-color: #D5D5D5;
+			color: #FFF;
+		}
+	/* /Кнопки управления окном */
+
+	.window{
+		background-color: #FFFFFF;
+		box-shadow: 0 1px 0 1px #e6e6e6;
+		border-radius: 2px;
+		padding: 15px;
+	}
+	.window input{
+		display: block;
+		width: 100%;
+		padding: 10px;
+		margin-bottom: 15px;
+		border: 1px solid #e6e6e6;
+		border-radius: 2px;
+		transition: all .3s;
+	}
+	.window input:focus {
+		outline: none;
+	}
+	.window input[type=text]:focus{
+		border: 1px solid #45B7AF;
+	}
+	.window input[type=submit]{
+		border: 0;
+		background-color: #CFCFCF;
+		color: #FFF;
+		cursor: pointer;
+	}
+	.window input[type=submit]:hover,
+	.window input[type=submit]:focus{
+		background-color: #45B7AF;
+	}
+	.window input[type=text].error{
+		border-color: #F3565D;
+	}
+
+	/* Клик по кнопкам */
+		nav div:active,
+		#navHome:active,
+		.window input[type=submit]:active{
+			-webkit-transform: scale(0.9);
+		}
+	/* /Клик по кнопнкам*/
+/* /Основное */
+
+/*
+FONT AWESOME
+
+// Настройки
+content: "\f085";
+
+// Выход (крестик)
+content: "\f00d";
+
+// Развернуть окно
+content: "\f065";
+
+// Обратное действие разворачиванию
+content: "\f066";
+
+// Свернуть окно
+content: "\f068";
+
+
+Для навигации
+// Дом
+content: "\f015";
+
+// Открыть файл
+content: "\f07c";
+
+// Инфо о программе
+content: "\f05a";
+
+*/

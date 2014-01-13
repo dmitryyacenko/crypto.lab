@@ -2,15 +2,17 @@
   "name": "Практикум по Криптографии",
   "main": "index.html",  
   "window": {
-    "title"		: "Практикум по Криптографии",
-    "icon"		: "app.ico", // Может быть png и прочим
-  	"width" 	: 500,
-  	"height"	: 500,
-  	"toolbar"	: false,
+    "title"      : "Практикум по Криптографии",
+    "icon"		   : "app.ico", // Может быть png и прочим
+  	"width"      : 700,
+  	"height"     : 500,
+    "min_width"  : 500,
+    "min_height" : 500,
+  	"toolbar"	   : false,
 
-    "frame"		: true, // Оконное обрамлние
-    "position"	: "center",
+    "frame"		   : false, // Оконное обрамлние
+    "position"	 : "center",
 
-    "resizable"	: false
+    "resizable"	 : true
   }
 }
