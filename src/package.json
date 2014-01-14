@@ -3,11 +3,11 @@
   "main": "index.html",  
   "window": {
     "title"      : "Практикум по Криптографии",
-    "icon"		   : "app.ico", // Может быть png и прочим
-  	"width"      : 700,
-  	"height"     : 500,
-    "min_width"  : 500,
-    "min_height" : 500,
+    "icon"		   : "app.png", // Может быть png и прочим
+  	"width"      : 800,
+  	"height"     : 550,
+    "min_width"  : 800,
+    "min_height" : 550,
   	"toolbar"	   : false,
 
     "frame"		   : false, // Оконное обрамлние

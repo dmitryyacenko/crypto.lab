@@ -14,8 +14,8 @@ html{
 	font-family: Roboto, sans-serif;
 	cursor: default;
 	-webkit-user-select: none;
-	min-width: 500px;
-	min-height: 500px;
+	min-width: 800px;
+	min-height: 550px;
 }
 body{
 	position: absolute;
@@ -127,7 +127,7 @@ header, footer, body, html, div, input{
 	#dragPlace{
 		position: absolute;
 		top: 0;
-		left: 0;
+		left: 50px;
 		right: 80px;
 		height: 30px;
 		-webkit-app-region: drag;
@@ -154,11 +154,23 @@ header, footer, body, html, div, input{
 			right: 54px;
 			line-height: 2.3;
 		}
+		.zoomIn:after{
+			content: "\f00e";
+			left: 30px;
+			line-height: 1.6;
+		}
+		.zoomOut:after{
+			content: "\f010";
+			left: 6px;
+			line-height: 1.6;
+		}
 
 		.closeApp:after,
 		.maximizeApp:after,
 		.unmaximizeApp:after,
-		.minimizeApp:after{
+		.minimizeApp:after,
+		.zoomIn:after,
+		.zoomOut:after{
 			font-family: 'FontAwesome';
 			font-size: 10pt;
 			color: #D5D5D5;
@@ -174,46 +186,13 @@ header, footer, body, html, div, input{
 		.closeApp:hover:after,
 		.maximizeApp:hover:after,
 		.unmaximizeApp:hover:after,
-		.minimizeApp:hover:after{
+		.minimizeApp:hover:after,
+		.zoomIn:hover:after,
+		.zoomOut:hover:after{
 			background-color: #D5D5D5;
 			color: #FFF;
 		}
 	/* /Кнопки управления окном */
-
-	.window{
-		background-color: #FFFFFF;
-		box-shadow: 0 1px 0 1px #e6e6e6;
-		border-radius: 2px;
-		padding: 15px;
-	}
-	.window input{
-		display: block;
-		width: 100%;
-		padding: 10px;
-		margin-bottom: 15px;
-		border: 1px solid #e6e6e6;
-		border-radius: 2px;
-		transition: all .3s;
-	}
-	.window input:focus {
-		outline: none;
-	}
-	.window input[type=text]:focus{
-		border: 1px solid #45B7AF;
-	}
-	.window input[type=submit]{
-		border: 0;
-		background-color: #CFCFCF;
-		color: #FFF;
-		cursor: pointer;
-	}
-	.window input[type=submit]:hover,
-	.window input[type=submit]:focus{
-		background-color: #45B7AF;
-	}
-	.window input[type=text].error{
-		border-color: #F3565D;
-	}
 
 	/* Клик по кнопкам */
 		nav div:active,
@@ -223,6 +202,35 @@ header, footer, body, html, div, input{
 		}
 	/* /Клик по кнопнкам*/
 /* /Основное */
+
+.window input{
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 15px;
+	border: 1px solid #e6e6e6;
+	border-radius: 2px;
+	transition: all .3s;
+}
+.window input:focus {
+	outline: none;
+}
+.window input[type=text]:focus{
+	border: 1px solid #45B7AF;
+}
+.window input[type=submit]{
+	border: 0;
+	background-color: #CFCFCF;
+	color: #FFF;
+	cursor: pointer;
+}
+.window input[type=submit]:hover,
+.window input[type=submit]:focus{
+	background-color: #45B7AF;
+}
+.window input[type=text].error{
+	border-color: #F3565D;
+}
 
 /*
 FONT AWESOME
@@ -241,6 +249,12 @@ content: "\f066";
 
 // Свернуть окно
 content: "\f068";
+
+// лупа -
+content: "\f010";
+
+// лупа +
+content: "\f00e";
 
 
 Для навигации

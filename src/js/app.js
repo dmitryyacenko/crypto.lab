@@ -3,9 +3,11 @@ $(function(){
 		win = gui.Window.get(),
 		closeApp = $('<span>').addClass('closeApp'),
 		maximizeApp = $('<span>').addClass('maximizeApp'),
-		minimizeApp = $('<span>').addClass('minimizeApp');
+		minimizeApp = $('<span>').addClass('minimizeApp'),
+		zoomIn = $('<span>').addClass('zoomIn'),
+		zoomOut = $('<span>').addClass('zoomOut');
 
-	$('body').append(closeApp, maximizeApp, minimizeApp);
+	$('body').append(closeApp, maximizeApp, minimizeApp, zoomIn, zoomOut);
 
 	win.on('maximize', function() {
 		if(maximizeApp.hasClass('maximizeApp'))
@@ -31,5 +33,15 @@ $(function(){
 	});
 	minimizeApp.on('click', function(){
 		win.minimize();
+	});
+
+
+	$(zoomIn).on('click', function(){
+		if(win.zoomLevel < 1.5)
+			win.zoomLevel += 0.5;
+	});
+	$(zoomOut).on('click', function(){
+		if(win.zoomLevel > -1.5)
+			win.zoomLevel -= 0.5;
 	});
 });
