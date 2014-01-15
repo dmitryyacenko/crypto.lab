@@ -87,6 +87,22 @@ header, footer, body, html, div, input{
 		vertical-align: middle;
 	}
 
+	/* Индикатор загрузки файла */
+	#navFile.success{
+		background-color: #45b758;
+	}
+	#navFile.success:hover{
+		background-color: #50d466;
+	}
+	#navFile.error{
+		background-color: #b74545;
+	}
+	#navFile.error:hover{
+		background-color: #d45050;
+	}
+	/* /Индикатор загрузки файла */
+	
+
 	/* Иконки в меню навигации */
 		#navHome,
 		nav .icon{
