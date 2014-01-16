@@ -11,25 +11,27 @@ $(function(){
         /* this.className = ''; */
         e.preventDefault();
 
-        var file = e.originalEvent.dataTransfer.files[0],
-            reader = new FileReader();
+        if(userName != '' && userGroup != ''){
+            var file = e.originalEvent.dataTransfer.files[0],
+                reader = new FileReader();
 
-        // console.log(file);
+            // console.log(file);
 
-        if(file.type === fileType && file.size < fileMaxSize*1024)
-            reader.readAsText(file);
-        else
-            fileError();
-      
-        // Событие после загрузки файла
-        reader.onload = function (event) {
-            fileText = event.target.result;
-            
-            fileSuccess();
+            if(file.type === fileType && file.size < fileMaxSize*1024)
+                reader.readAsText(file);
+            else
+                fileError();
+          
+            // Событие после загрузки файла
+            reader.onload = function (event) {
+                fileText = event.target.result;
+                
+                fileSuccess();
 
-            // console.log(event.target);
-            // console.log(fileText);
-        };
+                // console.log(event.target);
+                // console.log(fileText);
+            };
+        }
 
         return false;
     });
