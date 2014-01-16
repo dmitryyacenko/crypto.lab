@@ -82,8 +82,8 @@ $(function(){
 		this.styles = {
 			position: 'absolute',
 			backgroundColor: '#FFFFFF',
-			boxShadow: '0 1px 0 1px #e6e6e6',
-			borderRadius: 2,
+			border: '1px solid #c9c9c9',
+			borderRadius: 3,
 			padding: 15,
 			overflow: 'hidden'
 		}
@@ -119,8 +119,7 @@ $(function(){
 				item.changeStyle({
 					top: 90,
 					left: 15,
-					right: 15,
-					height: 175
+					right: 15
 				});
 				break;
 			case 'main':

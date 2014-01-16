@@ -27,13 +27,17 @@ body{
 	padding: 0;
 	color: #333647;
 	overflow: hidden;
-	background-color: #F4F4F4;
+	background-color: #d9d9d9;
 }
 header, footer, body, html, div, input{
 	-webkit-box-sizing: border-box;
 }
 
 /* Основное */
+	div, span, nav, input{
+		transition: all .3s;
+	}
+
 	header{
 		position: fixed;
 		top: 0;
@@ -41,6 +45,8 @@ header, footer, body, html, div, input{
 		width: 100%;
 		padding: 4px;
 		text-align: center;
+		color: #F4F4F4;
+		background-color: #1A1334;
 	}
 
 	#navHome{
@@ -49,11 +55,11 @@ header, footer, body, html, div, input{
 		top: 29px;
 		width: 60px;
 		height: 72px;
-		background-color: #45B7AF;
+		background-color: #EF6A32;
 		color: #F4F4F4;
 	}
 	#navHome:hover{
-		background-color: #50d4ca;
+		background-color: #FBBF45;
 	}
 	
 	nav{
@@ -62,9 +68,8 @@ header, footer, body, html, div, input{
 		top: 101px;
 		width: 60px;
 		height: 100%;
-		background-color: #333647;
+		background-color: #1A1334;
 		color: #F4F4F4;
-		transition: all .3s;
 		z-index: 1;
 	}
 	nav:hover{
@@ -74,11 +79,10 @@ header, footer, body, html, div, input{
 	#navHome{
 		cursor: pointer;
 		padding: 18px;
-		transition: all .3s;
 		overflow: hidden;
 	}
 	nav div:hover{
-		background-color: #4c506a;
+		background-color: #26294A;
 	}
 
 	nav div .name{
@@ -89,16 +93,10 @@ header, footer, body, html, div, input{
 
 	/* Индикатор загрузки файла */
 	#navFile.success{
-		background-color: #45b758;
-	}
-	#navFile.success:hover{
-		background-color: #50d466;
+		background-color: #03C383;
 	}
 	#navFile.error{
-		background-color: #b74545;
-	}
-	#navFile.error:hover{
-		background-color: #d45050;
+		background-color: #ED0345;
 	}
 	/* /Индикатор загрузки файла */
 	
@@ -135,7 +133,7 @@ header, footer, body, html, div, input{
 	#content h2{
 		background-color: #FFF;
 		padding: 20px;
-		box-shadow: 0 1px 0 0 #e6e6e6;
+		box-shadow: 0 1px 0 0 #bbbbbb;
 		margin: 0;
 		font-weight: normal;
 	}
@@ -197,7 +195,6 @@ header, footer, body, html, div, input{
 			height: 20px;
 			text-align: center;
 			border-radius: 50%;
-			transition: all .3s;
 		}
 		.closeApp:hover:after,
 		.maximizeApp:hover:after,
@@ -205,7 +202,7 @@ header, footer, body, html, div, input{
 		.minimizeApp:hover:after,
 		.zoomIn:hover:after,
 		.zoomOut:hover:after{
-			background-color: #D5D5D5;
+			background-color: #EF6A32;
 			color: #FFF;
 		}
 	/* /Кнопки управления окном */
@@ -224,28 +221,27 @@ header, footer, body, html, div, input{
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 15px;
-	border: 1px solid #e6e6e6;
+	border: 1px solid #bbbbbb;
 	border-radius: 2px;
-	transition: all .3s;
 }
 .window input:focus {
 	outline: none;
 }
 .window input[type=text]:focus{
-	border: 1px solid #45B7AF;
+	border: 1px solid #03C383;
 }
 .window input[type=submit]{
 	border: 0;
-	background-color: #CFCFCF;
+	background-color: #bbbbbb;
 	color: #FFF;
 	cursor: pointer;
 }
 .window input[type=submit]:hover,
 .window input[type=submit]:focus{
-	background-color: #45B7AF;
+	background-color: #03C383;
 }
 .window input[type=text].error{
-	border-color: #F3565D;
+	border-color: #ED0345;
 }
 
 /*
@@ -283,4 +279,8 @@ content: "\f07c";
 // Инфо о программе
 content: "\f05a";
 
+
+
+Настройки
+content: "\f085";
 */
