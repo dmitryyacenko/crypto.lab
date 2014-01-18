@@ -1,4 +1,6 @@
 $(function(){
+
+    /* Загрузка файла */
 	var fileCont = $('#'+fileId);
      
     $(window).on('dragover', function () {
@@ -48,4 +50,33 @@ $(function(){
         fileCont.removeClass('success');
         fileCont.addClass('error');
     }
-})
+    /* /Загрузка файла */
+});
+
+
+
+/* Сохранение файла */
+// programPath, fs: объявлены вначале файла app.js
+function fileWrite(name, text){
+    fs.writeFile(programPath + '\\' + name + '.txt', text, function(err){
+        if(err) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+}
+/* /Сохранение файла */
+
+
+/* Загрузка файла */
+function fileGet(name){
+    var file = programPath + '\\' + name + '.txt';
+    
+    // Если файла не существует или размер его больше разрешенного, слать лесом
+    if(!fs.existsSync(file) || fs.statSync(file)['size'] > fileMaxSize*1024)
+        return false;
+
+    return fs.readFileSync(file,'utf8');
+};
+/* /Загрузка файла */

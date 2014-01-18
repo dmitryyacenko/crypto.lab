@@ -13,6 +13,8 @@
     "frame"		   : false, // Оконное обрамлние
     "position"	 : "center",
 
-    "resizable"	 : true
+    "resizable"	 : true,
+
+    "show"       : false
   }
 }
