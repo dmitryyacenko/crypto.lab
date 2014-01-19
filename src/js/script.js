@@ -1,7 +1,7 @@
 var userName = '', // Имя пользователя
 	userGroup = '', // Группа пользователя
 	curPage = '', // Название открытой страницы
-	animSpeed = 600, // Скорость всех анимаций
+	animSpeed = 300, // Скорость всех анимаций
 	allWindows = {}, // Набор объектов открытых ранее окошек
 	contId = 'content', // ID основного контейнера, с которым ведется работа
 
@@ -23,7 +23,7 @@ $(function(){
 		userGroup = 'debugGroup';
 
 		// Главное окно
-		getPage('main user file', true);
+		getPage('main file', true);
 	}
 	else {
 		// Окно логина
@@ -37,13 +37,13 @@ $(function(){
 		var parent = $(this).parent();
 		if(authorization($('input[name=name]', parent), $('input[name=group]', parent))){
 			// Главная страница
-			getPage('main user file', true);
+			getPage('main file', true);
 		}
 	});
 
 	// Главная
 	$('#navHome').on('click', function(){
-		getPage('main user file', true);
+		getPage('main file', true);
 	});
 
 	/* Открыть файл
@@ -130,7 +130,7 @@ $(function(){
 				item.changeStyle({
 					top: 90,
 					left: 15,
-					bottom: 65,
+					bottom: 15,
 					width: '46%'
 				});
 				break;
@@ -145,19 +145,9 @@ $(function(){
 					top: 90,
 					left: '50%',
 					right: 15,
-					bottom: 65
+					bottom: 15
 				});
 				break;
-			case 'user':
-				item.title = 'Информация о юзере';
-				item.content += '<b>' + userName + '</b>' + ' (' + userGroup + ')';
-				item.changeStyle({
-					bottom: 15,
-					left: 15,
-					padding: 5
-				});
-			case 'description':
-				item.title = 'Описание'
 			default:
 				break;
 		}
@@ -186,34 +176,49 @@ $(function(){
 		curPage = windows[0];
 
 		// Плавное затухание старой страницы
-		content.fadeOut(animSpeed, function(){
-			// Очистка контента
-			if(clear){
-				$(this).empty();
-				$('<h2>').appendTo(content);
+		content.css({
+			opacity: 0,
+			transform: 'scale(0)'
+		})
+
+
+		// Очистка контента
+		if(clear){
+			content.empty();
+			$('<h2>').appendTo(content);
+		}
+
+		// Перебор и отрисовка запрошенных окон
+		for(k in windows){
+			var windowName = windows[k];
+
+			// Если окно ранее еще не создавалось
+			if(typeof allWindows[windowName] == 'undefined')
+				allWindows[windowName] = defaultWindow(windowName, k);
+
+			// Создает окно
+			allWindows[windowName].create();
+		}
+
+		// Заголовок
+		$('h2', content).html(allWindows[windows[0]].title);
+
+		// Плавное появление страницы
+		setInterval(function(){
+			// Инфа о юзере
+			if(userName && userGroup && !$('.user_info')[0]){
+				$('body').append('<div title="'+userName+' ('+userGroup+')" class="user_info"></div>')
 			}
 
-			// Перебор и отрисовка запрошенных окон
-			for(k in windows){
-				var windowName = windows[k];
-
-				// Если окно ранее еще не создавалось
-				if(typeof allWindows[windowName] == 'undefined')
-					allWindows[windowName] = defaultWindow(windowName, k);
-
-				// Создает окно
-				allWindows[windowName].create();
-			}
-
-			// Заголовок
-			$('h2', content).html(allWindows[windows[0]].title);
-
-			// Плавное появление страницы
-			$(this).fadeIn(animSpeed, function(){
-				// Подстановка скроллов
-				scrolls.get();
+			content.css({
+				opacity: 1,
+				transform: 'scale(1)'
 			});
-		});
+
+			// Подстановка скроллов
+			scrolls.get();
+		}, animSpeed);
+
 	}
 	/* /ФУНКЦИИ */
 
