@@ -79,14 +79,7 @@ $(function(){
 		this.className = '';
 		this.content = '';
 		this.title = '';
-		this.styles = {
-			position: 'absolute',
-			backgroundColor: '#FFFFFF',
-			border: '1px solid #c9c9c9',
-			borderRadius: 3,
-			padding: 15,
-			overflow: 'hidden'
-		}
+		this.styles = {};
 
 		this.create = function(){
 			$('<div>').css(this.styles)
@@ -153,7 +146,7 @@ $(function(){
 		}
 
 		if(name != 'user' && item.title && title != 0){
-			item.content = '<h4>' + item.title + '</h4>' + item.content;
+			item.content = '<h3>' + item.title + '</h3>' + item.content;
 		}
 		return item;
 	}
@@ -178,7 +171,7 @@ $(function(){
 		// Плавное затухание старой страницы
 		content.css({
 			opacity: 0,
-			transform: 'scale(0)'
+			transform: 'scale(0.5)'
 		})
 
 
