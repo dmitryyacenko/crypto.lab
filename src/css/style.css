@@ -34,8 +34,21 @@ header, footer, body, html, div, input{
 }
 
 /* Основное */
-	div, span, nav, input, .user_info:after{
+	input,
+	nav,
+	#overWindow > div,
+	#navFile,
+	#navAlgolist,
+	#navInfo,
+	#navHome,
+	#content,
+	.user_info,
+	.algorithmItem,
+	#overWindow .close:after{
 		transition: all .3s;
+	}
+	span.info {
+		transition: background-color .3s;
 	}
 
 	header{
@@ -46,7 +59,49 @@ header, footer, body, html, div, input{
 		padding: 4px;
 		text-align: center;
 		color: #F4F4F4;
-		background-color: #1A1334;
+		background-color: #5a6478;
+	}
+
+	#overWindow {
+		position: absolute;
+		display: none;
+		top: 29px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0,0,0,0.5);
+		z-index: 10;
+	}
+	#overWindow > div {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		-webkit-transform: scale(0.5);
+	}
+	#overWindow .close {
+		cursor: pointer;
+	}
+	#overWindow .close:after {
+		position: absolute;
+		font: 20pt 'FontAwesome';
+		content: "\f00d";
+		right: 15px;
+		top: 15px;
+		width: 35px;
+		height: 35px;
+		line-height: 1.5;
+		text-align: center;
+		opacity: 0.1;
+	}
+	#overWindow .close:hover:after {
+		opacity: 1;
+	}
+	#overWindow .window {
+		top: 15px;
+		left: 15px;
+		right: 15px;
+		bottom: 15px;
 	}
 
 	#navHome,
@@ -76,7 +131,7 @@ header, footer, body, html, div, input{
 		top: 101px;
 		width: 60px;
 		height: 100%;
-		background-color: #1A1334;
+		background-color: #5a6478;
 		color: #F4F4F4;
 		z-index: 1;
 	}
@@ -132,6 +187,9 @@ header, footer, body, html, div, input{
 		nav .file:after{
 			content: "\f07c";
 		}
+		nav .algolist:after{
+			content: "\f085";
+		}
 	/* /Иконки в меню навигации */
 
 	#content{
@@ -146,7 +204,6 @@ header, footer, body, html, div, input{
 	#content h2{
 		background-color: #FFF;
 		padding: 20px;
-		box-shadow: 0 1px 0 0 #bbbbbb;
 		margin: 0;
 		font-weight: normal;
 	}
@@ -157,18 +214,22 @@ header, footer, body, html, div, input{
 	.window{
 		position: absolute;
 		background-color: #FFFFFF;
-		border: 1px solid #c9c9c9;
 		border-radius: 3px;
 		padding: 15px;
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
 	.window::-webkit-scrollbar {
-	    width: 10px;
+	    width: 1px;
 		padding: 10px;
+		background-color: rgba(0,0,0,0);
 	}
 	.window::-webkit-scrollbar-thumb {
-	    border-right: 1px solid #1A1334;
+	    border-right: 1px solid #5a6478;
+	}
+	.window::-webkit-scrollbar-button{
+		height:5px;
+		background-color: transparent;
 	}
 
 	#dragPlace{
@@ -249,6 +310,8 @@ header, footer, body, html, div, input{
 	/* /Клик по кнопнкам*/
 /* /Основное */
 
+
+/* Авторизация */
 .window input{
 	display: block;
 	width: 100%;
@@ -276,6 +339,49 @@ header, footer, body, html, div, input{
 .window input[type=text].error{
 	border-color: #ED0345;
 }
+/* /Авторизация */
+
+
+
+/* Список алгоритмов */
+.window.algolist{
+	padding: 0;
+}
+.algorithmType,
+.algorithmItem{
+	padding: 20px;
+	width: 100%;
+}
+.algorithmItem:hover{
+	color: #fff;
+	background-color: #EF6A32;
+}
+.algorithmType{
+	color: #fff;
+	background-color: #5A6478;
+}
+.algorithmItem{
+	cursor: pointer;
+	position: relative;
+}
+.algorithmItem .info{
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 65px;
+	text-align: center;
+}
+.algorithmItem .info:hover{
+	background-color: #FBBF45
+}
+.algorithmItem .info:after{
+	content: "\f05a";
+	font-family: 'FontAwesome';
+	font-size: 20pt;
+	line-height: 2.3;
+}
+/* /Список алгоритмов*/
 
 /*
 FONT AWESOME

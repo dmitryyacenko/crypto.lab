@@ -13,9 +13,9 @@ var userName = '', // Имя пользователя
 	debugMode = true; // Дебаг. Когда true - игнорирует некоторые проверки
 
 
-
 $(function(){
-	var content = $('#'+contId);
+	var content = $('#'+contId),
+		$overWindow = $('#overWindow');
 
 	if(debugMode){
 		$('header').append(' (DEBUG mode)');
@@ -46,11 +46,37 @@ $(function(){
 		getPage('main file', true);
 	});
 
+	// Алгоритмы
+	$('#navAlgolist').on('click', function(){
+		getPage('algolist', true);
+	});
+
 	/* Открыть файл
 	$('#navFile').on('click', function(){
 		getPage('file', true);
 	});
 	*/
+
+
+	// Получение информации об алгоритме
+	$('body').on('click', '.algorithmItem .info', function() {
+		var algoName = $(this).parent().attr('data-name');
+		showAlgoInfo(algoName);
+	});
+	// Закрыть информацию об алгоритме
+	$('body').on('click', '#overWindow .close', function() {
+		var parent = $(this).parent();
+			children = parent.children('div');
+
+		parent.fadeOut(animSpeed, function() {
+			children.find('.window').html('')
+		})
+		
+		children.css({
+			transform: 'scale(0.5)',
+			opacity: 0
+		})
+	});
 	/* /ОБРАБОТЧИКИ */
 
 
@@ -141,6 +167,26 @@ $(function(){
 					bottom: 15
 				});
 				break;
+			case 'algolist':
+				item.title = 'Выбор алгоритма для шифрования';
+
+				item.content += '<div class="algorithmType">Симметричные:</div>';
+				for(k in symmetricAlgorithms){
+					item.content += '<div data-name="'+k+'" class="algorithmItem">'+k+'<span class="info"></span></div>';
+				}
+
+				item.content += '<div class="algorithmType">Асимметричные:</div>';
+				for(k in asymmetricAlgorithms){
+					item.content += '<div data-name="'+k+'" class="algorithmItem">'+k+'<span class="info"></span></div>';
+				}
+
+				item.changeStyle({
+					top: 90,
+					left: 15,
+					right: 15,
+					bottom: 15
+				});
+				break;
 			default:
 				break;
 		}
@@ -197,7 +243,7 @@ $(function(){
 		$('h2', content).html(allWindows[windows[0]].title);
 
 		// Плавное появление страницы
-		setInterval(function(){
+		setTimeout(function(){
 			// Инфа о юзере
 			if(userName && userGroup && !$('.user_info')[0]){
 				$('body').append('<div title="'+userName+' ('+userGroup+')" class="user_info"></div>')
@@ -207,36 +253,22 @@ $(function(){
 				opacity: 1,
 				transform: 'scale(1)'
 			});
-
-			// Подстановка скроллов
-			scrolls.get();
 		}, animSpeed);
 
 	}
-	/* /ФУНКЦИИ */
 
 
+	// Показать информацию об алгоритме
+	function showAlgoInfo(name) {
+		var info = symmetricAlgorithms[name]() || asymmetricAlgorithms[name]();
+		$('.window', $overWindow).html(info);
 
-
-
-	/* ПЛАГИНЫ */
-	function scrolls() {
-		this.name = '.window';
-		this.update = function(){
-			$(this.name).perfectScrollbar('update');
-		}
-		this.get = function(){
-			$(this.name).perfectScrollbar({
-				wheelSpeed:30,
-				suppressScrollX: true
-			});
-		}
+		$overWindow.fadeIn(animSpeed)
+		.children().css({
+			transform: 'scale(1)',
+			opacity: 1
+		})
 	}
-	var scrolls = new scrolls();
 
-	$(window).resize(function(){
-		scrolls.update();
-	});
-
-	/* /ПЛАГИНЫ */
+	/* /ФУНКЦИИ */
 });
