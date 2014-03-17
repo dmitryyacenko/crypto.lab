@@ -44,10 +44,14 @@ header, footer, body, html, div, input{
 	#content,
 	.user_info,
 	.algorithmItem,
-	#overWindow .close:after{
+	#overWindow .close:after,
+	.algorithmType,
+	.algorithmSubtype{
 		transition: all .3s;
 	}
-	span.info {
+	span.info,
+	.algolist .oneLevel,
+	.algolist .twoLevel {
 		transition: background-color .3s;
 	}
 
@@ -344,13 +348,21 @@ header, footer, body, html, div, input{
 
 
 /* Список алгоритмов */
+#algoInfo {
+	display: none;
+}
 .window.algolist{
 	padding: 0;
 }
 .algorithmType,
-.algorithmItem{
+.algorithmItem,
+.algorithmSubtype{
 	padding: 20px;
 	width: 100%;
+	cursor: pointer;
+}
+.algorithmItem {
+	background-color: #ebebeb;
 }
 .algorithmItem:hover{
 	color: #fff;
@@ -360,8 +372,17 @@ header, footer, body, html, div, input{
 	color: #fff;
 	background-color: #5A6478;
 }
+.algorithmType:hover{
+	background-color: #26294A;
+}
+.algorithmSubtype{
+	color: #fff;
+	background-color: #7f8aa1;
+}
+.algorithmSubtype:hover{
+	background-color: #26294A;
+}
 .algorithmItem{
-	cursor: pointer;
 	position: relative;
 }
 .algorithmItem .info{
@@ -380,6 +401,75 @@ header, footer, body, html, div, input{
 	font-family: 'FontAwesome';
 	font-size: 20pt;
 	line-height: 2.3;
+}
+.algolist .oneLevel,
+.algolist .twoLevel,
+.algolist .oneLevel > div,
+.algolist .twoLevel > div {
+	position: relative;
+}
+.algolist .oneLevel,
+.algolist .twoLevel {
+	overflow: hidden;
+}
+.algolist .oneLevel,
+.algolist .twoLevel {
+	display: none;
+}
+.algolist .twoLevel {
+	padding-left: 20px;
+}
+.algolist .oneLevel:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 10px;
+	background-color: #fff;
+	z-index: 1;
+}
+.algolist .oneLevel:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 5px;
+	width: 1px;
+	background-color: #ccc;
+	z-index: 1;
+}
+.algolist .oneLevel > .algorithmSubtype:after,
+.algolist .oneLevel > .algorithmItem:after {
+	content: '';
+	position: absolute;
+	top: 30px;
+	left: 5px;
+	width: 5px;
+	height: 1px;
+	background-color: #ccc;
+	z-index: 1;
+}
+
+.algolist .twoLevel:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 15px;
+	width: 1px;
+	background-color: #ccc;
+	z-index: 1;
+}
+.algolist .twoLevel > div:after {
+	content: '';
+	position: absolute;
+	top: 30px;
+	left: -5px;
+	width: 5px;
+	height: 1px;
+	background-color: #ccc;
+	z-index: 1;
 }
 /* /Список алгоритмов*/
 

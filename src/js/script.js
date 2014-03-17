@@ -58,10 +58,15 @@ $(function(){
 	*/
 
 
+	// Открыть аккордеон
+	$('body').on('click', '.algorithmType, .algorithmSubtype', function() {
+		$(this).next().slideToggle(animSpeed);
+	});
 	// Получение информации об алгоритме
 	$('body').on('click', '.algorithmItem .info', function() {
-		var algoName = $(this).parent().attr('data-name');
-		showAlgoInfo(algoName);
+		var algoName = $(this).parent().attr('data-name'),
+			algoType = $(this).parent().attr('data-type');
+		showAlgoInfo(algoName, algoType);
 	});
 	// Закрыть информацию об алгоритме
 	$('body').on('click', '#overWindow .close', function() {
@@ -170,21 +175,47 @@ $(function(){
 			case 'algolist':
 				item.title = 'Выбор алгоритма для шифрования';
 
-				item.content += '<div class="algorithmType">Симметричные:</div>';
-				for(k in symmetricAlgorithms){
-					item.content += '<div data-name="'+k+'" class="algorithmItem">'+k+'<span class="info"></span></div>';
-				}
+				item.content += '<div class="algorithmType">Алгоритмы шифрования</div>';
+				item.content += '<div class="oneLevel">';
+					item.content += '<div class="algorithmSubtype">Симметричные</div>';
+					item.content += '<div class="twoLevel">';
+						for(k in algorithms.encryption.sym){
+							var name = algorithms.encryption.sym[k];
+							item.content += '<div data-name="'+name+'" data-type="encryption" class="algorithmItem">'+name+'<span class="info"></span></div>';
+						}
+					item.content += '</div>';
 
-				item.content += '<div class="algorithmType">Асимметричные:</div>';
-				for(k in asymmetricAlgorithms){
-					item.content += '<div data-name="'+k+'" class="algorithmItem">'+k+'<span class="info"></span></div>';
-				}
+					item.content += '<div class="algorithmSubtype">Асимметричные</div>';
+					item.content += '<div class="twoLevel">';
+						for(k in algorithms.encryption.asym){
+							var name = algorithms.encryption.asym[k];
+							item.content += '<div data-name="'+name+'" data-type="encryption" class="algorithmItem">'+name+'<span class="info"></span></div>';
+						}
+					item.content += '</div>';
+				item.content += '</div>';
+
+				item.content += '<div class="algorithmType">Алгоритмы ЭЦП</div>';
+				item.content += '<div class="oneLevel">';
+					for(k in algorithms.eds){
+						var name = algorithms.eds[k];
+						item.content += '<div data-name="'+name+'" data-type="eds" class="algorithmItem">'+name+'<span class="info"></span></div>';
+					}
+				item.content += '</div>';
+
+				item.content += '<div class="algorithmType">Алгоритмы распределения ключей</div>';
+				item.content += '<div class="oneLevel">';
+					for(k in algorithms.key){
+						var name = algorithms.key[k];
+						item.content += '<div data-name="'+name+'" data-type="key" class="algorithmItem">'+name+'<span class="info"></span></div>';
+					}
+				item.content += '</div>';
 
 				item.changeStyle({
 					top: 90,
 					left: 15,
 					right: 15,
-					bottom: 15
+					bottom: 15,
+					backgroundColor: '#D9D9D9'
 				});
 				break;
 			default:
@@ -259,8 +290,12 @@ $(function(){
 
 
 	// Показать информацию об алгоритме
-	function showAlgoInfo(name) {
-		var info = symmetricAlgorithms[name]() || asymmetricAlgorithms[name]();
+	function showAlgoInfo(name, type) {
+		var info = $('#'+name+'[data-type='+type+']').html();
+
+		// Если данные не найдены, не выводить ничего
+		if(!info) return;
+
 		$('.window', $overWindow).html(info);
 
 		$overWindow.fadeIn(animSpeed)
