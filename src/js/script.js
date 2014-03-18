@@ -10,7 +10,7 @@ var userName = '', // Имя пользователя
 	fileMaxSize = 128, // Максимальный размер файла, КБ
 	fileType = 'text/plain', // Тип загружаемого файла
 
-	debugMode = true; // Дебаг. Когда true - игнорирует некоторые проверки
+	debugMode = false; // Дебаг. Когда true - игнорирует некоторые проверки
 
 
 $(function(){
@@ -24,6 +24,8 @@ $(function(){
 
 		// Главное окно
 		getPage('main file', true);
+
+		toggleDisabled();
 	}
 	else {
 		// Окно логина
@@ -38,6 +40,8 @@ $(function(){
 		if(authorization($('input[name=name]', parent), $('input[name=group]', parent))){
 			// Главная страница
 			getPage('main file', true);
+
+			toggleDisabled();
 		}
 	});
 
@@ -89,7 +93,7 @@ $(function(){
 
 	/* ФУНКЦИИ */
 	function authorization(name, group){
-		if(name.val().length < 5){
+		if(name.val().length < 2){
 			name.addClass('error');
 			name.focus();
 			return false;
@@ -303,6 +307,12 @@ $(function(){
 			transform: 'scale(1)',
 			opacity: 1
 		})
+	}
+
+
+	// Сделать неактивными/активными элементы
+	function toggleDisabled() {
+		$('.disabled, .undisabled').toggleClass('disabled undisabled');
 	}
 
 	/* /ФУНКЦИИ */
