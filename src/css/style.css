@@ -46,7 +46,8 @@ header, footer, body, html, div, input{
 	.algorithmItem,
 	#overWindow .close:after,
 	.algorithmType,
-	.algorithmSubtype{
+	.algorithmSubtype,
+	table td{
 		transition: all .3s;
 	}
 	span.info,
@@ -321,15 +322,91 @@ header, footer, body, html, div, input{
 	/* Клик по кнопкам */
 		nav div:active,
 		#navHome:active,
-		.window input[type=submit]:active{
+		input[type=submit]:enabled:active{
 			-webkit-transform: scale(0.9);
 		}
 	/* /Клик по кнопнкам*/
+
+
+
+	/* Таблицы */
+	table{
+	    border-collapse: collapse;
+	    border-spacing: 0;
+		margin:10px;
+		padding:0px;
+		border-width: 1px;
+		border:1px solid #D9D9D9;
+	}
+	table tr:last-child td:last-child {
+		-moz-border-radius-bottomright:0px;
+		-webkit-border-bottom-right-radius:0px;
+		border-bottom-right-radius:0px;
+	}
+	table tr:first-child td:first-child {
+		-moz-border-radius-topleft:0px;
+		-webkit-border-top-left-radius:0px;
+		border-top-left-radius:0px;
+	}
+	table tr:first-child td:last-child {
+		-moz-border-radius-topright:0px;
+		-webkit-border-top-right-radius:0px;
+		border-top-right-radius:0px;
+	}
+	table tr:last-child td:first-child{
+		-moz-border-radius-bottomleft:0px;
+		-webkit-border-bottom-left-radius:0px;
+		border-bottom-left-radius:0px;
+	}
+	table tr:nth-child(odd){ background-color:#ffffff; }
+	table tr:nth-child(even)    { background-color:#e2e2e2; }
+	table td{
+		vertical-align:middle;
+		padding: 10px;
+		border:1px solid #D9D9D9;
+		border-width:0px 1px 1px 0px;
+		text-align:center;
+	}
+	table tr:last-child td{
+		border-width:0px 1px 0px 0px;
+	}
+	table tr td:last-child{
+		border-width:0px 0px 1px 0px;
+	}
+	table tr:last-child td:last-child{
+		border-width:0px 0px 0px 0px;
+	}
+	table.head tr td:first-child,
+	table.head tr:first-child td{
+			background:-o-linear-gradient(bottom, #5a6478 5%, #5a6478 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5a6478), color-stop(1, #5a6478) );
+		background:-moz-linear-gradient( center top, #5a6478 5%, #5a6478 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#5a6478", endColorstr="#5a6478");	background: -o-linear-gradient(top,#5a6478,5a6478);
+
+		background-color:#5a6478;
+		border: none;
+		text-align:center;
+		font-size:14px;
+		font-family:Arial;
+		font-weight:bold;
+		color:#ffffff;
+	}
+
+	table td:hover {
+		background-color:#EF6A32;
+		color: #fff;
+	}
+	table tr:first-child td:first-child{
+		border-width:0px 0px 1px 0px;
+	}
+	table tr:first-child td:last-child{
+		border-width:0px 0px 1px 1px;
+	}
+	/* /Таблицы */
 /* /Основное */
 
 
 /* Авторизация */
-.window input{
+input{
 	display: block;
 	width: 100%;
 	padding: 10px;
@@ -337,23 +414,23 @@ header, footer, body, html, div, input{
 	border: 1px solid #bbbbbb;
 	border-radius: 2px;
 }
-.window input:focus {
+input:focus {
 	outline: none;
 }
-.window input[type=text]:focus{
+input[type=text]:focus{
 	border: 1px solid #03C383;
 }
-.window input[type=submit]{
+input[type=submit]:enabled{
 	border: 0;
 	background-color: #bbbbbb;
 	color: #FFF;
 	cursor: pointer;
 }
-.window input[type=submit]:hover,
-.window input[type=submit]:focus{
+input[type=submit]:enabled:hover,
+input[type=submit]:enabled:focus{
 	background-color: #03C383;
 }
-.window input[type=text].error{
+input[type=text].error{
 	border-color: #ED0345;
 }
 /* /Авторизация */

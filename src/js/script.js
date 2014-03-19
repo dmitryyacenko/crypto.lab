@@ -10,7 +10,7 @@ var userName = '', // Имя пользователя
 	fileMaxSize = 128, // Максимальный размер файла, КБ
 	fileType = 'text/plain', // Тип загружаемого файла
 
-	debugMode = false; // Дебаг. Когда true - игнорирует некоторые проверки
+	debugMode = true; // Дебаг. Когда true - игнорирует некоторые проверки
 
 
 $(function(){
@@ -295,7 +295,7 @@ $(function(){
 
 	// Показать информацию об алгоритме
 	function showAlgoInfo(name, type) {
-		var info = $('#'+name+'[data-type='+type+']').html();
+		var info = $('#algoInfo iframe').contents().find('#'+name+'[data-type='+type+']').html();
 
 		// Если данные не найдены, не выводить ничего
 		if(!info) return;
