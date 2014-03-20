@@ -85,33 +85,64 @@ var SBLOCK = [
 ];
 
 
-function DES() {
-	// Получить случайную 64-битовую последовательность
-	_getRandBin = function(bits, type) {
-		var result = { full: '', left: '', right: '' };
+// Функция сложения по модулю два
+function moduloTwo(one, two) {
+	var len = one.length,
+		result = '';
 
-		for(var i = 0, temp = ''; i < bits; i++){
-			temp = Math.round(Math.random()).toString();
-			result.full += temp;
-
-			if(type=='key') {
-				if(i % 8 == 7) {
-					result.left += temp;
-				} else if (i < 54) {
-					result.right += temp;
-				}
-			} else {
-				if(i < bits/2) {
-					result.left += temp;
-				} else {
-					result.right += temp;
-				}
-			}
+	for(var i = 0; i < len; i++) {
+		if(one[i] == 1 && two[i] == 1 || one[i] == 0 && two[i] == 0) {
+			result += 0;
+		} else if (one[i] == 0 && two[i] == 1 || one[i] == 1 && two[i] == 0) {
+			result += 1;
 		}
-
-		return result;
 	}
 
+	return result;
+}
+
+// Перевод из двоичной системы и десятичную
+function bin2dec(bin) {
+	return parseInt(bin, 2);
+}
+// Перевод из десятичной системы и двоичную
+function dec2bin(dec) {
+	return dec.toString(2);
+}
+
+// Получить случайное число
+function getRandValue(min, max) {
+	return Math.round(min - 0.5 + Math.random()*(max-min+1));
+}
+
+// Получить случайную 64-битовую последовательность
+function getRandBin(bits, type) {
+	var result = { full: '', left: '', right: '' };
+
+	for(var i = 0, temp = ''; i < bits; i++){
+		temp = Math.round(Math.random()).toString();
+		result.full += temp;
+
+		if(type=='key') {
+			if(i % 8 == 7) {
+				result.left += temp;
+			} else if (i < 54) {
+				result.right += temp;
+			}
+		} else {
+			if(i < bits/2) {
+				result.left += temp;
+			} else {
+				result.right += temp;
+			}
+		}
+	}
+
+	return result;
+}
+
+
+function DES() {
 	// Функция для получения расширенного блока
 	_getEBlock = function(instr, block) {
 		var len = block.length,
@@ -124,26 +155,46 @@ function DES() {
 		return result;
 	}
 
-	// Функция сложения по модулю два
-	_moduloTwo = function(one, two) {
-		var len = one.length,
-			result = '';
+	// Получить вход и выход на S-блоках
+	_getRandSBlock = function(key, eblock) {
+		var rand = getRandValue(0, 7),
+			lenBlock = eblock.length,
+			fullBlock = moduloTwo(key, eblock),
+			splitBlock = [];
 
-		for(var i = 0; i < len; i++) {
-			if(one[i] == 1 && two[i] == 1 || one[i] == 0 && two[i] == 0) {
-				result += 0;
-			} else if (one[i] == 0 && two[i] == 1 || one[i] == 1 && two[i] == 0) {
-				result += 1;
+		// Разбиение на 8 S-блоков
+		for(var i = 0, temp = ''; i < lenBlock; i++) {
+			temp += fullBlock[i];
+			if((i+1) % 6 == 0) {
+				splitBlock.push(temp);
+				temp = '';
 			}
 		}
 
-		return result;
+		var inner = splitBlock[rand];
+
+
+		// Получение выходной последовательности
+		var col = bin2dec(inner[1] + inner[2] + inner[3] + inner[4]),
+			row = bin2dec(inner[0] + inner[5]),
+			outer = dec2bin(SBLOCK[rand][col+row*16]);
+
+		// Выходной блок должен быть длиной 4 двоичных числа
+		outer = ['','000','00','0',''][outer.length] + outer;
+
+		return {
+			num: rand,
+			full: fullBlock,
+			split: splitBlock,
+			inner: inner,
+			outer: outer
+		};
 	}
 
-	this.openBlock = _getRandBin(64, '');
+	this.openBlock = getRandBin(64, '');
 	this.EopenBlock = _getEBlock(this.openBlock.right, EBLOCK);
-	this.key = _getRandBin(64, 'key');
-	this.inSBLOCK = _moduloTwo(this.key.right, this.EopenBlock);
+	this.key = getRandBin(64, 'key');
+	this.SBlock = _getRandSBlock(this.key.right, this.EopenBlock);
 }
 
 // Получение всех расчитанных данных по алгоритму
@@ -205,15 +256,15 @@ function getTable(cols, arr, head) {
 		// Строим первую строку
 		if(head && i == 0) {
 			result += '<tr><td></td>';
-				for(var j = 0; j < cols-1; j++) {
+				for(var j = 0; j < cols; j++) {
 					result += '<td>'+j+'</td>';
 				}
-			result += '<td>'+cols+'</td></tr>';
+			result += '</tr>';
 		}
 
 		// Начало строки
 		if(row == 0) {
-			result += '<tr>'+(head?('<td>'+k+'</td>'):'');
+			result += '<tr>'+(head?('<td>'+(k++)+'</td>'):'');
 		}
 
 		// Содержимое ячейки
@@ -228,6 +279,9 @@ function getTable(cols, arr, head) {
 
 	return result;
 }
+
+
+
 
 // Первый шаг
 (function() {
@@ -247,6 +301,7 @@ function getTable(cols, arr, head) {
 
 })();
 
+
 // Второй шаг
 (function() {
 	var $block = $('#algorithmBox div:eq(1)'),
@@ -265,6 +320,7 @@ function getTable(cols, arr, head) {
 	});
 })();
 
+
 // Третий шаг
 (function() {
 	var $block = $('#algorithmBox > div:eq(2)'),
@@ -273,10 +329,28 @@ function getTable(cols, arr, head) {
 	// Заполнить поле ввода
 	$block.find('.ExtRightOpenBlock').val(des.EopenBlock);
 	$block.find('.Key').val(des.key.right);
-	$block.find('.inSBLOCK').attr('data-val', des.inSBLOCK);
+	$block.find('.inSBLOCK').attr('data-val', des.inSBlock);
 	
 	// Проверка введенных данных
 	$block.on('input', 'input[type=text]', function() {
 		checkEnter($block, $submit, true);
+	});
+})();
+
+
+// Четвертый шаг
+(function() {
+	var $block = $('#algorithmBox > div:eq(3)'),
+		$submit = $block.find('input[type="submit"]');
+
+	// Заполнить поле ввода
+	$block.find('div.getSblock').html('<p>Подстановка на примере S-блока '+(1+des.SBlock.num)+'</p>'+getTable(16, SBLOCK[des.SBlock.num], true));
+
+	$block.find('.innerBlock').val(des.SBlock.inner);
+	$block.find('.outerBlock').attr('data-val', des.SBlock.outer);
+
+	// Проверка введенных данных
+	$block.on('input', 'input[type=text]', function() {
+		checkEnter($block, $submit, false);
 	});
 })();
