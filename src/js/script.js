@@ -10,6 +10,8 @@ var userName = '', // Имя пользователя
 	fileMaxSize = 128, // Максимальный размер файла, КБ
 	fileType = 'text/plain', // Тип загружаемого файла
 
+	key = 'mySecretKey',
+
 	debugMode = true; // Дебаг. Когда true - игнорирует некоторые проверки
 
 
@@ -85,6 +87,13 @@ $(function(){
 			transform: 'scale(0.5)',
 			opacity: 0
 		})
+	});
+	// Начать прохождение алгоритма
+	$('body').on('click', '.algorithmItem', function() {
+		var algoName = $(this).attr('data-name'),
+			algoType = $(this).attr('data-type');
+
+		getPage(algoType + '-' + algoName, true);
 	});
 	/* /ОБРАБОТЧИКИ */
 
@@ -223,6 +232,23 @@ $(function(){
 				});
 				break;
 			default:
+				item.title = name.split('-')[1];
+
+				item.content += '<script>'
+				item.content += '$.ajax({';
+				    item.content += 'url: "user/'+name+'.html",';
+				    item.content += 'success: function (data) {';
+				    	item.content += '$(".'+name+'").html(data);';
+				    item.content += '}';
+				item.content += '});';
+				item.content += '</script>'
+
+				item.changeStyle({
+					top: 90,
+					left: 15,
+					right: 15,
+					bottom: 15
+				});
 				break;
 		}
 

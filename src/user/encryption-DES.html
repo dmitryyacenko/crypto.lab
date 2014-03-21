@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/jquery-2.0.3.min.js"></script>
-
 <div id='algorithmBox'>
     <div>
         <h2>1. Разбиение блока на две части</h2>
@@ -13,17 +10,17 @@
             <input data-val='' class='LeftOpenBlock check' placeholder="Левая часть блока" type="text">
             <input data-val='' class='RightOpenBlock check' placeholder="Правая часть блока" type="text">
 
-            <input type="submit" value="Далее" disabled>
+            <input data-destination='1' type="submit" value="Далее" disabled>
         </p>
     </div>
-    <div>
+    <div style='display: none;'>
         <h2>2. Перестановка с расширением</h2>
         <p>
             Перестановка с расширением расширяет правую половину данных, К, от 32 до 48 битов. Так как при этом не просто повторяются определенные биты, но и изменяется их порядок, эта операция называется перестановкой с расширением. У нее две задачи: привести размер правой половины в соответствие с ключом для операции XOR и получить более длинный результат, который можно будет сжать в ходе операции подстановки. Однако главный криптографический смысл совсем в другом. За счет влияния одного бита на две подстановки быстрее возрастает зависимость битов результата от битов исходных данных. Это называется лавинным эффектом. DES спроектирован так, чтобы как можно быстрее добиться зависимости каждого бита шифротекста от каждого бита открытого текста и каждого бита ключа.
         </p>
         <p>
             Перестановка с расширением показана на рисунке 5.4. Иногда она называется E-блоком (от expansion). Для каждого 4-битового входного блока первый и четвертый бит представляют собой два бита выходного блока, а второй и третий биты - один бит выходного блока. В таблице 5.3.5 показано, какие позиции результата соответствуют каким позициям исходных данных. Например, бит входного блока в позиции 3 переместится в позицию 4 выходного блока, а бит входного блока в позиции 21 - в позиции 30 и 32 выходного блока.<br>
-            <img src="../img/DES_expansion.jpg" alt=""><br>
+            <img src="img/DES_expansion.jpg" alt=""><br>
             <div class='getExpansion'></div>
 
         </p>
@@ -33,15 +30,14 @@
             <label>Правая часть блока</label>
             <input class='RightOpenBlock' type="text" readonly>
             <input data-val='' class='ExtRightOpenBlock check' placeholder="Расширенная правая часть блока" type="text">
-            <input type="submit" value="Далее" disabled>
+            <input data-destination='2' type="submit" value="Далее" disabled>
         </p>
     </div>
-    <div>
+    <div style='display: none'>
         <h2>3. Сложение с ключом</h2>
         <p>
             Сложение с ключом по модулю два.
         </p>
-
         <br>
         <p>
             <label>Расширенная правая часть блока</label>
@@ -49,12 +45,11 @@
             <label>Ключ</label>
             <input class='Key' type="text" readonly>
             <input data-val='' class='inSBLOCK check' placeholder="Результат сложения" type="text">
-            <input type="submit" value="Далее" disabled>
+            <input data-destination='3' type="submit" value="Далее" disabled>
         </p>
     </div>
-    <div>
+    <div style='display: none'>
         <h2>4. Подстановка с помощью S-блоков</h2>
-        <br>
         <p>
             Подстановка с помощью S-блоков. После объединения сжатого блока с расширенным блоком с помощью XOR над 48-битовым результатом выполняется операция подстановки. Подстановки производятся в восьми  блоках подстановки, или S-блоках (от substitution). У каждого S-блока 6-битовый вход и 4-битовый выход, всего используется восемь различных S-блоков. (Для восьми S-блоков DES потребуется 256 байтов памяти.) 48 битов делятся на восемь 6-битовых подблока. Каждый отдельный подблок обрабатывается отдельным S-блоком: первый подблок - S-блоком 1, второй - S-блоком 2, и так далее. 
         </p>
@@ -64,15 +59,31 @@
         <p>
             Первый и последний разряды входной 6-битной последовательности являются двоичной записью числа A, 0<=A<=3, средние 4 разряда представляют число B, 0<=B<=15. Пара чисел (A, B) определяет число, находящееся в пересечении строки A и столбца B. Двоичное представление этого числа дает выходные 4 бита.
         </p>
-        <img src="../img/DES_sblock.jpg" alt=""><br>
+        <img src="img/DES_sblock.jpg" alt=""><br>
         <div class='getSblock'></div>
 
+        <br>
         <label>Входные 6 бит S-блока</label>
         <input class='innerBlock' type="text" readonly>
         <input class='outerBlock check' placeholder='Выходные 4 бита S-блока' type="text">
-        <input type="submit" value="Далее" disabled>
+        <input data-destination='4' type="submit" value="Далее" disabled>
     </div>
-    <div></div>
+    <div style='display: none'>
+        <h2>5. Перестановка с помощью P-блоков</h2>
+        <p>
+            32-битовый выход подстановки с помощью S-блоков, перетасовываются в соответствии с P-блоком. Эта перестановка перемещает каждый входной бит в другую позицию, ни один бит не используется дважды, и ни один бит не игнорируется. Этот процесс называется прямой перестановкой или просто перестановкой. Позиции, в которые перемещаются биты, показаны в таблице 5.3.6. Например, бит 21 перемещается в позицию 4, а бит 4 - в позицию 31.
+        </p>
+        <div class='getPblock'></div>
+        <br>
+        <label>Правая часть после S-блока</label>
+        <input class='outerBlock' type="text" readonly>
+        <input class='resultP check' placeholder='Результат перестановки' type="text">
+        <label>Левая часть S-блока</label>
+        <input class='LeftBlock' type="text" readonly>
+        <input class='endResult check' placeholder='Результат сложения по модулю два' type="text">
+
+        <input data-destination='final' type="submit" value="Далее" disabled>
+    </div>
 </div>
 
-<script src="des.js"></script>
+<script src="user/encryption-des.js"></script>

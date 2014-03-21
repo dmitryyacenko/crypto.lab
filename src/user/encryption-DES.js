@@ -31,6 +31,11 @@ var EBLOCK = [
 	24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32, 1
 ];
 
+// PBlock
+var PBLOCK = [
+	16, 7, 20, 21, 29, 12, 28, 17, 1, 15, 23, 26, 5, 18, 31, 10,
+	2, 8, 24, 14, 32, 27, 3, 9, 19, 13, 30, 6, 22, 11, 4, 25
+];
 
 // 8 S-блоков
 var SBLOCK = [
@@ -155,6 +160,15 @@ function DES() {
 		return result;
 	}
 
+	_getSout = function(split, S) {
+		// Получение выходной последовательности
+		var col = bin2dec(split[1] + split[2] + split[3] + split[4]),
+			row = bin2dec(split[0] + split[5]),
+			outer = dec2bin(S[col+row*16]);
+
+		// Выходной блок должен быть длиной 4 двоичных числа
+		return ['','000','00','0',''][outer.length] + outer;
+	}
 	// Получить вход и выход на S-блоках
 	_getRandSBlock = function(key, eblock) {
 		var rand = getRandValue(0, 7),
@@ -171,30 +185,47 @@ function DES() {
 			}
 		}
 
-		var inner = splitBlock[rand];
+		var inner = splitBlock[rand],
+			outer = _getSout(splitBlock[rand], SBLOCK[rand]);
 
-
-		// Получение выходной последовательности
-		var col = bin2dec(inner[1] + inner[2] + inner[3] + inner[4]),
-			row = bin2dec(inner[0] + inner[5]),
-			outer = dec2bin(SBLOCK[rand][col+row*16]);
-
-		// Выходной блок должен быть длиной 4 двоичных числа
-		outer = ['','000','00','0',''][outer.length] + outer;
+		// Получить полную выходную последовательность
+		var lenOut = splitBlock.length,
+			fullOut = '';
+		for(var i = 0; i < lenOut; i++) {
+			fullOut += _getSout(splitBlock[i], SBLOCK[i]);
+		}
 
 		return {
 			num: rand,
 			full: fullBlock,
+			fullOut: fullOut,
 			split: splitBlock,
 			inner: inner,
 			outer: outer
 		};
 	}
 
+	// Получить результат после P-блока
+	_getPBlock = function(inner) {
+		var result = '',
+			len = PBLOCK.length;
+
+		for(var i = 0; i < len; i++) {
+			result += inner[PBLOCK[i]-1];
+		}
+
+		return {
+			inner: inner,
+			outer: result
+		}
+	}
+
 	this.openBlock = getRandBin(64, '');
 	this.EopenBlock = _getEBlock(this.openBlock.right, EBLOCK);
 	this.key = getRandBin(64, 'key');
 	this.SBlock = _getRandSBlock(this.key.right, this.EopenBlock);
+	this.PBlock = _getPBlock(this.SBlock.fullOut);
+	this.result = moduloTwo(this.openBlock.left, this.PBlock.outer);
 }
 
 // Получение всех расчитанных данных по алгоритму
@@ -343,9 +374,10 @@ function getTable(cols, arr, head) {
 	var $block = $('#algorithmBox > div:eq(3)'),
 		$submit = $block.find('input[type="submit"]');
 
-	// Заполнить поле ввода
+	// Получить таблицу S-блока
 	$block.find('div.getSblock').html('<p>Подстановка на примере S-блока '+(1+des.SBlock.num)+'</p>'+getTable(16, SBLOCK[des.SBlock.num], true));
 
+	// Заполнить поле ввода
 	$block.find('.innerBlock').val(des.SBlock.inner);
 	$block.find('.outerBlock').attr('data-val', des.SBlock.outer);
 
@@ -354,3 +386,39 @@ function getTable(cols, arr, head) {
 		checkEnter($block, $submit, false);
 	});
 })();
+
+
+// Пятый шаг
+(function() {
+	var $block = $('#algorithmBox > div:eq(4)'),
+		$submit = $block.find('input[type="submit"]');
+
+	// Получить таблицу P-блока
+	$block.find('div.getPblock').html(getTable(16, PBLOCK, false));
+
+	console.log(des.SBlock);
+	$block.find('.outerBlock').val(des.SBlock.fullOut);
+	$block.find('.resultP').attr('data-val', des.PBlock.outer);
+	$block.find('.LeftBlock').val(des.openBlock.left);
+	$block.find('.endResult').attr('data-val', des.result);
+
+	// Проверка введенных данных
+	$block.on('input', 'input[type=text]', function() {
+		checkEnter($block, $submit, true);
+	});
+})();
+
+// Обработка кликов на кнопку Далее
+$('#algorithmBox input[type=submit]').on('click', function() {
+	var destination = $(this).attr('data-destination');
+	
+	if(destination == 'final') {
+
+	} else {
+		$('#algorithmBox > div').fadeOut(animSpeed, function() {
+			setTimeout(function() {
+				$('#algorithmBox > div:eq('+destination+')').fadeIn(animSpeed);
+			}, 10);
+		})
+	}
+});

@@ -573,6 +573,12 @@ input[type=text].error{
 }
 /* /Список алгоритмов*/
 
+/* Окно с алгоритмом */
+.algorithmBox h2 {
+	text-align: center;
+}
+/* /Окно с алгоритмом */
+
 /*
 FONT AWESOME
 
