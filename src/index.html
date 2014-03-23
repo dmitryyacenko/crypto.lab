@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/jquery.confirm.css">
 		<script src="js/algoInfos.js"></script>
 		<script src="js/jquery-2.0.3.min.js"></script>
+		<script src="js/jquery.confirm.js"></script>
 		<script src="js/app.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/file-functions.js"></script>
@@ -14,7 +16,7 @@
 		<header>Crypto&nbsp;Lab</header>
 		<div id='dragPlace'></div>
 
-		<div class='disabled' id='navHome'></div>
+		<div id='navHome'></div>
 		<nav class='disabled'>
 			<div id='navFile'><span class='icon file'></span><span class='name'>Загрузка&nbsp;файла</span></div>
 			<div id='navAlgolist'><span class='icon algolist'></span><span class='name'>Алгоритмы</span></div>
@@ -37,4 +39,8 @@
 			<iframe src="algoInfo.html" frameborder="0"></iframe>
 		</div>
 	</body>
+
+<!-- Подключение алгоритмов -->
+<script src="user/core.js"></script>
+<script src="algos/DES.js"></script>
 </html>

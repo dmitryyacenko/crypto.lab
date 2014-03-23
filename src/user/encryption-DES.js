@@ -1,4 +1,4 @@
-var numAutoComplete = 8;
+algorithmStart();
 
 // Перестановка ключа
 var PK1 = [
@@ -90,63 +90,6 @@ var SBLOCK = [
 ];
 
 
-// Функция сложения по модулю два
-function moduloTwo(one, two) {
-	var len = one.length,
-		result = '';
-
-	for(var i = 0; i < len; i++) {
-		if(one[i] == 1 && two[i] == 1 || one[i] == 0 && two[i] == 0) {
-			result += 0;
-		} else if (one[i] == 0 && two[i] == 1 || one[i] == 1 && two[i] == 0) {
-			result += 1;
-		}
-	}
-
-	return result;
-}
-
-// Перевод из двоичной системы и десятичную
-function bin2dec(bin) {
-	return parseInt(bin, 2);
-}
-// Перевод из десятичной системы и двоичную
-function dec2bin(dec) {
-	return dec.toString(2);
-}
-
-// Получить случайное число
-function getRandValue(min, max) {
-	return Math.round(min - 0.5 + Math.random()*(max-min+1));
-}
-
-// Получить случайную 64-битовую последовательность
-function getRandBin(bits, type) {
-	var result = { full: '', left: '', right: '' };
-
-	for(var i = 0, temp = ''; i < bits; i++){
-		temp = Math.round(Math.random()).toString();
-		result.full += temp;
-
-		if(type=='key') {
-			if(i % 8 == 7) {
-				result.left += temp;
-			} else if (i < 54) {
-				result.right += temp;
-			}
-		} else {
-			if(i < bits/2) {
-				result.left += temp;
-			} else {
-				result.right += temp;
-			}
-		}
-	}
-
-	return result;
-}
-
-
 function DES() {
 	// Функция для получения расширенного блока
 	_getEBlock = function(instr, block) {
@@ -232,88 +175,6 @@ function DES() {
 var des = new DES();
 
 
-// проверка правильного ввода
-// autocomplete - автоматически дозаполнить поле, если numAutoComplete символов введено верно
-function checkEnter(block, submit, autocomplete) {
-	var result = 1;
-
-	block.find('input.check').each(function() {
-		var need = $(this).attr('data-val'),
-			cur = $(this).val(),
-			len = cur.length;
-		
-		// Автозаполнение поля
-		if(autocomplete && len >= numAutoComplete) {
-			var auto = 1;
-			for(var i = 0; i < len; i++) {
-				if (cur[i] == need[i]) {
-					auto *= 1;
-				} else {
-					auto *= 0;
-				}
-			}
-
-			if(auto) {
-				$(this).val(need);
-			}
-		}
-
-		// Проверка на совпадение символов
-		if($(this).attr('data-val') != $(this).val()) {
-			result *= 0;
-			return;
-		} else {
-			result *= 1;
-		}
-	});
-
-
-	if(result) {
-		submit.removeAttr('disabled');
-	} else {
-		submit.attr('disabled','disabled');
-	}
-}
-
-// Табличный билдер :)
-// Принимает количество столбцов, массив, true/false для нумерации столбцов и строк
-// Возвращает готовую таблицу
-function getTable(cols, arr, head) {
-	var len = arr.length,
-		result = '<table class="'+(head?'head':'')+'">';
-
-	for(var i = 0, k = 0; i < len; i++) {
-		var row = i % cols;
-		// Строим первую строку
-		if(head && i == 0) {
-			result += '<tr><td></td>';
-				for(var j = 0; j < cols; j++) {
-					result += '<td>'+j+'</td>';
-				}
-			result += '</tr>';
-		}
-
-		// Начало строки
-		if(row == 0) {
-			result += '<tr>'+(head?('<td>'+(k++)+'</td>'):'');
-		}
-
-		// Содержимое ячейки
-		result += '<td>'+arr[i]+'</td>';
-
-		// Конец строки
-		if(row == cols-1) {
-			result += '</tr>';
-		}
-	}
-	result += '</table>';
-
-	return result;
-}
-
-
-
-
 // Первый шаг
 (function() {
 	var $block = $('#algorithmBox div:eq(0)'),
@@ -360,7 +221,7 @@ function getTable(cols, arr, head) {
 	// Заполнить поле ввода
 	$block.find('.ExtRightOpenBlock').val(des.EopenBlock);
 	$block.find('.Key').val(des.key.right);
-	$block.find('.inSBLOCK').attr('data-val', des.inSBlock);
+	$block.find('.inSBLOCK').attr('data-val', des.SBlock.full);
 	
 	// Проверка введенных данных
 	$block.on('input', 'input[type=text]', function() {
@@ -396,7 +257,6 @@ function getTable(cols, arr, head) {
 	// Получить таблицу P-блока
 	$block.find('div.getPblock').html(getTable(16, PBLOCK, false));
 
-	console.log(des.SBlock);
 	$block.find('.outerBlock').val(des.SBlock.fullOut);
 	$block.find('.resultP').attr('data-val', des.PBlock.outer);
 	$block.find('.LeftBlock').val(des.openBlock.left);
@@ -409,11 +269,11 @@ function getTable(cols, arr, head) {
 })();
 
 // Обработка кликов на кнопку Далее
-$('#algorithmBox input[type=submit]').on('click', function() {
+$('#algorithmBox').on('click', 'input[type=submit]', function() {
 	var destination = $(this).attr('data-destination');
 	
 	if(destination == 'final') {
-
+		algorithmFinal();
 	} else {
 		$('#algorithmBox > div').fadeOut(animSpeed, function() {
 			setTimeout(function() {

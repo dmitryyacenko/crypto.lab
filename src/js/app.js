@@ -87,7 +87,9 @@ $(function(){
 
 	// Обработка клика по кнопке закрытия окна
 	closeApp.on('click', function(){
-		win.close();
+		dialogConfirm(function() {
+			win.close();
+		});
 	});
 	// Обработка клика по кнопке развертывания окна
 	maximizeApp.on('click', function(){

@@ -1,0 +1,87 @@
+<form id='algoSettings'>
+	<div style='display: inline-block'>
+		<h3>Режим</h3>
+		<input value='manual' type='radio' name='mode' id='manual'>
+		<label for='manual'>Ручной</label>
+		<br>
+		<input value='auto' type='radio' name='mode' id='auto'>
+		<label for='auto'>Автоматический</label>
+	</div>
+	<div style='display: inline-block'>
+		<h3>Направление</h3>
+		<input value='encryption' type='radio' name='type' id='encryption'>
+		<label for='encryption'>Шифрование</label>
+		<br>
+		<input value='decryption' type='radio' name='type' id='decryption'>
+		<label for='decryption'>Дешифрование</label>
+	</div>
+
+	<br><br>
+	<input name='key' value='' placeholder='Введите секретный ключ!' type='text'>
+	<input type='submit' value='Начать'>
+</form>
+
+<script>
+	var $algoSettings = $('#algoSettings');
+
+	// Заполнить поля
+	$algoSettings.find('#'+cryptoMode).attr('checked', 'checked');
+	$algoSettings.find('#'+cryptoType).attr('checked', 'checked');
+	$algoSettings.find('input[name=key]').val(cryptoKey);
+
+	// Проверка на ввод ключа
+	$algoSettings.on('input', 'input[type=text]', function() {
+		var next = $('input[type=submit]', $algoSettings);
+		if($(this).val() == 0) {
+			next.attr('disabled', 'disabled');
+		} else {
+			next.removeAttr('disabled');
+		}
+	});
+
+	// Начало
+	$algoSettings.on('click', 'input[type=submit]', function(){
+		var serial = strSplit('=', '&', $('#algoSettings').serialize());
+
+		cryptoMode = serial.mode;
+		cryptoType = serial.type;
+		cryptoKey = serial.key;
+
+		if(serial.mode == 'manual') {
+			$.ajax({
+			    url: 'user/' + curPage + '.html',
+			    success: function (data) {
+			    	$('.' + curPage).fadeOut(animSpeed, function() {
+			    		$(this).html(data).fadeIn(animSpeed);
+			    	});
+			    }
+			});
+		} else {
+			algorithmFinal();
+		}
+
+		return false;
+	});
+
+	// Распарсить GET строку на переменные
+	// http://falkon303.wordpress.com/2012/11/27/parsing-jquery-serialization-get-variables-using-javascript/
+	function strSplit(start, end, string) {
+		array_ret = new Array();
+		valArray = new Array();
+
+		for (var i=0;i<string.split(start).length;i++) {
+			array_ret.push(string.split(end)[i]);
+		}
+
+		for (var j=0;j<array_ret.length-1;j++) {
+			valArray.push(array_ret[j].split(start)[1]);
+		}
+
+		array_ret.length = 0;
+		return {
+			mode: valArray[0],
+			type: valArray[1],
+			key: valArray[2]
+		};
+	}
+</script>
