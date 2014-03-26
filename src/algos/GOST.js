@@ -138,7 +138,7 @@ function ClassGost() {
 	this.SetKey = function(key){
 		if(typeof key == 'string'){
 			if(key.length !== 32){
-				alert('SetKey(): "key" length must be equal to 256 bits (32 bytes)');
+				console.error('SetKey(): "key" length must be equal to 256 bits (32 bytes)');
 				return false;
 			}
 
@@ -156,7 +156,7 @@ function ClassGost() {
 			return true;
 		} else if (Array.isArray(key)){
 			if(key.length != 8){
-				alert('SetKey(): count of elements in the array "key" must be equal to 8');
+				console.error('SetKey(): count of elements in the array "key" must be equal to 8');
 				return false;
 			}
 			
@@ -166,7 +166,7 @@ function ClassGost() {
 				var val = key[k];
 
 				if(val % 1 != 0){
-					alert('SetKey(): every element of the array "key" must be integer. The array element "table['+k+']" is not an integer.');
+					console.error('SetKey(): every element of the array "key" must be integer. The array element "table['+k+']" is not an integer.');
 					return false;
 				}
 
@@ -176,7 +176,7 @@ function ClassGost() {
 			k_block = new_key;
 			return true;
 		} else {
-			alert('SetKey(): unknown "key" format. "key" must be array[8] of integer or 32-bytes string.');
+			console.error('SetKey(): unknown "key" format. "key" must be array[8] of integer or 32-bytes string.');
 			return false;
 		}
 	}
@@ -204,12 +204,12 @@ function ClassGost() {
 	 */
 	this.SetTableReplace = function(table){
 		if(!Array.isArray(table)){
-			alert('SetTableReplace(): "table" must be array');
+			console.error('SetTableReplace(): "table" must be array');
 			return false;
 		}
 
 		if(table.length != 8){
-			alert('SetTableReplace(): count of elements in the array "$table" must be equal to 8');
+			console.error('SetTableReplace(): count of elements in the array "$table" must be equal to 8');
 			return false;
 		}
 
@@ -220,12 +220,12 @@ function ClassGost() {
 			var val = table[k];
 
 			if(!Array.isArray(val)){
-				alert('SetTableReplace(): table['+k+'] must be array');
+				console.error('SetTableReplace(): table['+k+'] must be array');
 				return false;
 			}
 
 			if(val.length != 16){
-				alert('SetTableReplace(): count of elements in the array "$table['+k+']" must be equal to 16');
+				console.error('SetTableReplace(): count of elements in the array "$table['+k+']" must be equal to 16');
 				return false;
 			}
 
@@ -236,12 +236,12 @@ function ClassGost() {
 				var int_val = val[int_key];
 
 				if(int_val % 1 != 0){
-					alert('SetTableReplace(): every element of the array "$table['+k+']" must be integer. The array element "$table['+k+']['+int_key+']" is not an integer.');
+					console.error('SetTableReplace(): every element of the array "$table['+k+']" must be integer. The array element "$table['+k+']['+int_key+']" is not an integer.');
 					return false;
 				}
 
 				if(int_val > 15 || int_val < 0){
-					alert('SetTableReplace(): every element of the array "$table['+k+']" must be greater than or equal to 0 and less than or equal to 15. The array element "$table['+k+']['+int_key+']" is not in this range.');
+					console.error('SetTableReplace(): every element of the array "$table['+k+']" must be greater than or equal to 0 and less than or equal to 15. The array element "$table['+k+']['+int_key+']" is not in this range.');
 					return false;
 				}
 				new_val.push(int_val);
