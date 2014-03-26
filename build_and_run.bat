@@ -36,9 +36,10 @@ cd ..\..
 echo.
 call :ColorText 0a "Copying files..."
 echo.
+if not exist %RELEASE_DIR%\d3dcompiler_43.dll copy %NODE_DIR%\buildTools\nw\d3dcompiler_43.dll %RELEASE_DIR%\d3dcompiler_43.dll
 if not exist %RELEASE_DIR%\ffmpegsumo.dll copy %NODE_DIR%\buildTools\nw\ffmpegsumo.dll %RELEASE_DIR%\ffmpegsumo.dll
 if not exist %RELEASE_DIR%\icudt.dll copy %NODE_DIR%\buildTools\nw\icudt.dll %RELEASE_DIR%\icudt.dll
-if not exist %RELEASE_DIR%\libEGL.dll copy %NODE_DIR%\buildTools\nw\libEGL.dll %RELEASE_DIR%\libEGL.dll
+if not exist %RELEASE_DIR%\libEGL.d3dcompiler_43.dlldll copy %NODE_DIR%\buildTools\nw\libEGL.dll %RELEASE_DIR%\libEGL.dll
 if not exist %RELEASE_DIR%\libGLESv2.dll copy %NODE_DIR%\buildTools\nw\libGLESv2.dll %RELEASE_DIR%\libGLESv2.dll
 if not exist %RELEASE_DIR%\nw.pak copy %NODE_DIR%\buildTools\nw\nw.pak %RELEASE_DIR%\nw.pak
 
