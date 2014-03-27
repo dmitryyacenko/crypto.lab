@@ -1,9 +1,5 @@
 /** Класс осуществляющий работу с шифром ГОСТ 28147-89 (шифрование/дешифрованние данных)
- * http://intsystem.org/19/gost-28147-89-php/
- * @author IntSys
- * @copyright Copyright (c) 2011-2013, IntSys, intsystem.org
- * 
- *
+ * @see http://intsystem.org/19/gost-28147-89-php/ (thanks InSys)
  *
  * Переведено на язык javascript 
  * Craager (с) 2014
