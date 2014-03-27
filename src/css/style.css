@@ -34,6 +34,10 @@ body{
 header, footer, body, html, div, input{
 	-webkit-box-sizing: border-box;
 }
+.selectable {
+	-webkit-user-select: initial;
+	cursor: text;
+}
 
 /* Основное */
 	input,
@@ -443,7 +447,7 @@ header, footer, body, html, div, input{
 /* /Основное */
 
 
-/* Авторизация */
+/* Кнопки и текстовые поля */
 input{
 	display: block;
 	width: 100%;
@@ -471,7 +475,7 @@ input[type=submit]:enabled:focus{
 input[type=text].error{
 	border-color: #ED0345;
 }
-/* /Авторизация */
+/* /Кнопки и текстовые поля */
 
 
 

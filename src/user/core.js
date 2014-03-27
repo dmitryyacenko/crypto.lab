@@ -66,13 +66,32 @@ function moduloTwo(one, two) {
 	return result;
 }
 
-// Перевод из двоичной системы и десятичную
+// Перевод из двоичной системы в десятичную
 function bin2dec(bin) {
 	return parseInt(bin, 2);
 }
-// Перевод из десятичной системы и двоичную
+// Перевод из десятичной системы в двоичную
 function dec2bin(dec) {
 	return dec.toString(2);
+}
+// Перевод из двоичной системы в 16-ричную
+function bin2hex(s) {
+	//  discuss at: http://phpjs.org/functions/bin2hex/
+	// original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+	// bugfixed by: Onno Marsman
+	// bugfixed by: Linuxworld
+	// improved by: ntoniazzi (http://phpjs.org/functions/bin2hex:361#comment_177616)
+	//   example 1: bin2hex('Kev');
+	//   returns 1: '4b6576'
+	//   example 2: bin2hex(String.fromCharCode(0x00));
+	//   returns 2: '00'
+	var i, l, o = '', n;
+	s += '';
+	for (i = 0, l = s.length; i < l; i++) {
+		n = s.charCodeAt(i).toString(16);
+		o += n.length < 2 ? '0' + n : n;
+	}
+	return o;
 }
 
 // Получить случайное число
@@ -82,7 +101,7 @@ function getRandValue(min, max) {
 
 // Получить случайную 64-битовую последовательность
 function getRandBin(bits, type) {
-	var result = { full: '', left: '', right: '' };
+	var result = { full: '', left: '', right: '', leftBit: 0, rightBit: 0 };
 
 	for(var i = 0, temp = ''; i < bits; i++){
 		temp = Math.round(Math.random()).toString();
@@ -102,6 +121,10 @@ function getRandBin(bits, type) {
 			}
 		}
 	}
+
+	result.leftBit = parseInt(result.left, 2);
+	result.rightBit = parseInt(result.right, 2);
+	result.fullBit = parseInt(result.full, 2);
 
 	return result;
 }
