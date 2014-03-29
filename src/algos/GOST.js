@@ -64,6 +64,16 @@ function ClassGost() {
 	 * @return mixed возвращает зашифрованную строку, или false в случае неудачи
 	 */
 	this.Encode = function(data, key, table){
+		// Дополнение ключа до 32 символов
+		var keyLen = key.length;
+		if(keyLen < 32) {
+			var fullKey = '';
+			for(var i = 0; i < 32; i++) {
+				fullKey += key[i % keyLen];
+			}
+			key = fullKey;
+		}
+
 		// utf8 encode
 		data = unescape(encodeURIComponent(data));
 		if(key){
@@ -97,6 +107,16 @@ function ClassGost() {
 	 * @return mixed возвращает исходные данные, или false в случае неудачи
 	 */
 	this.Decode = function(data, key, table){
+		// Дополнение ключа до 32 символов
+		var keyLen = key.length;
+		if(keyLen < 32) {
+			var fullKey = '';
+			for(var i = 0; i < 32; i++) {
+				fullKey += key[i % keyLen];
+			}
+			key = fullKey;
+		}
+		
 		if(key){
 			if(!this.SetKey(key)){
 				return false;
