@@ -1,0 +1,94 @@
+<div id='algorithmBox'>
+    <div>
+        <h2>1. Разбиение блока на две части</h2>
+        <img style='float: right; padding: 10px;' src="img/GOST_diagram.png" alt="">
+        <p>Для зашифровывания в режиме простой замены 64-битный блок открытого текста сначала разбивается на две части по 32 бита (младшие биты — L, старшие биты — R)
+        </p>
+        
+        <p style='clear: right'>
+            <label>Блок открытого текста (64 бит)</label>
+            <input class='openBlock' type="text" readonly>
+            <input data-val='' class='LeftOpenBlock check' placeholder="Левая часть блока" type="text">
+            <input data-val='' class='RightOpenBlock check' placeholder="Правая часть блока" type="text">
+
+            <input data-destination='1' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>2. Дополнение ключа</h2>
+        <p>Алгоритм ГОСТ использует 256-битный ключ (32 символа ASCII). Поэтому введеный пользователем пароль дополняется до 256 бит путем циклического дополнения. Например: <br>
+        Пароль "Pass"<br>
+        Расширенный ключ "PassPassPassPassPassPassPassPass"
+        </p>
+        
+        <p>
+            <label>Ваш пароль</label>
+            <input class='userPass' type="text" readonly>
+            <input data-val='' class='fullKey check' placeholder="Расширенный ключ" type="text">
+
+            <input data-destination='2' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>3. Выбор ключа для раунда</h2>
+        <p>
+            На i-ом цикле используется подключ Ki:<br>
+            L<sub>i+1</sub> = R<sub>i</sub> <img src="img/GOST_exor.png" alt=""> f(L<sub>i</sub>, K<sub>i</sub>) <span style='vertical-align: top'>( <img src="img/GOST_exor.png" alt=""> = двоичное «исключающее или»)</span><br>
+            R<sub>i+1</sub> = L<sub>i</sub>
+        </p>
+        <p>256-битный ключ разбивается на восемь 32-битных подключей:<br>
+        <span class='keyPlace selectable'></span>
+        </p>
+        
+        <p>Алгоритм имеет 32 раунда и для каждого выбирается подключ по следущей таблице:</p>
+        <div class='getKeyTable'></div>
+        <p>Здесь номер каждой клетки соответствует номеру раунда. Значение клетки - это номер подключа.</p>
+        
+        <p>
+            <input data-val='' class='roundKey check' placeholder="" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Функция из сети Фейстелля - сложение ключа и половины входного блока</h2>
+        <img style='float: right; padding: 10px;' src="img/GOST_feistel.png" alt="">
+        <p>Введите результат сложения входного блока и ключа по модулю 2<sup>32</sup></p>
+
+        <p class='moduloEx'></p>
+        <p>
+            <input data-val='' class='modulo check' placeholder="Результат сложения по модулю" type="text">
+            <input data-destination='4' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>5. Функция из сети Фейстелля - S-блок</h2>
+        <img style='float: right; padding: 10px;' src="img/GOST_feistel.png" alt="">
+        <p>
+            Результат сложения по модулю 2<sup>32</sup> разбивается на восемь 4-битовых подпоследовательностей, каждая из которых поступает на вход своего S-блока. Общее количество S-блоков ГОСТа — 8, то есть столько же, сколько и подпоследовательностей. Каждый S-блок представляет собой перестановку чисел от 0 до 15 (конкретный вид S-блоков в стандарте не определен). Первая 4-битная подпоследовательность попадает на вход первого S-блока, вторая — на вход второго и т.д. Результат проверяется по таблице, где строки - это номера S-блоков, столбцы - значения 4-битовых подпоследовательностей.
+        </p>
+        <div class='getSBlock'></div>
+        <p class='sfirstEx selectable'>
+            
+        </p>
+        <p>
+            <input data-val='' class='sfirst check' placeholder="Число на выходе S-блока" type="text">
+            <input data-destination='5' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>6. Функция из сети Фейстелля - циклический сдвиг</h2>
+        <img style='float: right; padding: 10px;' src="img/GOST_feistel.png" alt="">
+        <p>
+            Выходы всех восьми S-блоков объединяются в 32-битное слово, затем всё слово циклически сдвигается влево (к старшим разрядам) на 11 битов.
+        </p>
+        <p class='feistellEx selectable'>
+            
+        </p>
+        <p>
+            <input data-val='' class='modulo check' placeholder="Результат сложения по модулю" type="text">
+            <input data-destination='final' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+</div>
+
+<script src="user/encryption-GOST.js"></script>

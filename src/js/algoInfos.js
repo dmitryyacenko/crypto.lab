@@ -1,7 +1,7 @@
 var algorithms = {
 	// Шифрования
 	encryption: {
-		sym: ['IDEA', 'ГОСТ', 'BlowFish', 'RC6', 'DES', 'AES'],
+		sym: ['IDEA', 'GOST', 'BlowFish', 'RC6', 'DES', 'AES'],
 		asym: ['RSA', 'Elgamal']
 	},
 	// Электронная цифровая подпись

@@ -42,6 +42,13 @@ function processFile(callback) {
 			} else if(cryptoType == 'decryption') {
 				result = CryptoJS.TripleDES.decrypt(fileText, cryptoKey).toString(CryptoJS.enc.Utf8);
 			}
+		case 'GOST':
+			var gost = new ClassGost();
+			if(cryptoType == 'encryption') {
+				result = gost.Encode(fileText, cryptoKey);
+			} else if(cryptoType == 'decryption') {
+				result = gost.Decode(fileText, cryptoKey);
+			}
 		break;
 	}
 	
@@ -73,6 +80,14 @@ function bin2dec(bin) {
 // Перевод из десятичной системы в двоичную
 function dec2bin(dec) {
 	return dec.toString(2);
+}
+// Перевод из десятичной системы в 16-ричную
+function dec2hex(n){
+	return Number(n).toString(16);
+}
+// Перевод из 16-ричной системы в десятичную
+function hex2dec(hex){ 
+	return parseInt(hex,16); 
 }
 // Перевод из двоичной системы в 16-ричную
 function bin2hex(s) {
