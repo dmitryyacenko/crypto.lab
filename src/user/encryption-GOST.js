@@ -1,6 +1,4 @@
-// algorithmStart();
-var cryptoKey = 'LolChto',
-	numAutoComplete = 8;
+algorithmStart();
 
 // Использование ключей в раундах
 var ROUND_KEY = [
@@ -39,7 +37,7 @@ function GOST() {
 
 			// Разбиение на 8 частей
 			if(i % 4 == 3) {
-				result.parts.push(parseInt(bin2hex(tmpParts), 16));
+				result.parts.push(getBinZero(dec2bin(parseInt(bin2hex(tmpParts), 16)), 32));
 				tmpParts = '';
 			}
 		}
@@ -58,14 +56,14 @@ function GOST() {
 	// Результат сложения по модулю 2^32
 	var _getFeistell = function(one, two) {
 		// 2^32 = 4294967296
+		// getBinZero(dec2bin(x), 32);
 		var modulo = (one + two) % 4294967296,
 			moduloBin = dec2bin(modulo),
 			moduloParts = [],
 			SInner = (modulo).toString(16),
 			SFirstResult = 0,
-			SFullResult = parseInt(getRandBin(32, '').full, 2),
-			result = (SFullResult << 11) | (SFullResult >> 21);
-
+			SFullResult = getBinZero(getRandBin(32, '').full, 32),
+			result = SFullResult.substr(11) + SFullResult.substr(0, 11);
 
 		if(moduloBin.length < 32) {
 			for(var i = moduloBin.length; i < 32; i++) {
@@ -91,28 +89,27 @@ function GOST() {
 		}
 
 		return {
-			modulo: modulo,
-			moduloBin: moduloBin,
+			moduloBin: getBinZero(moduloBin, 32),
 			moduloParts: moduloParts,
 			SInner: SInner,
 			SFirstResult: SFirstResult,
-			SFullResult: SFullResult,
+			SFullResult: getBinZero(dec2bin(SFullResult, 32)),
 			result: result
 		};
 	}
 
-
+	// getBinZero(dec2bin(x), 32);
 	this.unicVals = _getUnic();
 	this.openBlock = getRandBin(64, '');
 	this.key = _getKey(cryptoKey);
-	this.roundKey = {num: ROUND_KEY[this.unicVals.round - 1], val: this.key.parts[ROUND_KEY[this.unicVals.round - 1] - 1]};
-	this.feistell = _getFeistell(this.roundKey.val, this.unicVals.Ai.fullBit)
+	this.roundKey = { num: ROUND_KEY[this.unicVals.round - 1], val: this.key.parts[ROUND_KEY[this.unicVals.round - 1] - 1] };
+	this.feistell = _getFeistell(bin2dec(this.roundKey.val), this.unicVals.Ai.fullBit);
 }
 
 // Получение всех расчитанных данных по алгоритму
 var gost = new GOST();
 
-console.log(gost.key);
+console.log(gost);
 
 // Первый шаг
 (function() {
@@ -153,7 +150,7 @@ console.log(gost.key);
 		$submit = $block.find('input[type="submit"]');
 
 	// Отобразить все ключи
-	$block.find('.keyPlace').html(gost.key.parts.join('&emsp;'));
+	$block.find('.keyPlace').html(gost.key.parts.join('<br>'));
 
 	// Таблица выбора ключа
 	$block.find('div.getKeyTable').html(getTable(8, ROUND_KEY, false));
@@ -176,10 +173,10 @@ console.log(gost.key);
 		$submit = $block.find('input[type="submit"]');
 
 	// Исходные данные
-	$block.find('.moduloEx').html('Ключ: ' + gost.roundKey.val + '<br>Входной блок: ' + gost.unicVals.Ai.fullBit);
+	$block.find('.moduloEx').html('Ключ:<br><span class="selectable">' + gost.roundKey.val + '</span><br>Входной блок:<br><span class="selectable">' + gost.unicVals.Ai.full+'</span>');
 	
 	// Заполнить поле ввода
-	$block.find('.modulo').attr('data-val', gost.feistell.modulo);
+	$block.find('.modulo').attr('data-val', gost.feistell.moduloBin);
 
 	// Проверка введенных данных
 	$block.on('input', 'input[type=text]', function() {

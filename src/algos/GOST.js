@@ -307,20 +307,14 @@ function ClassGost() {
 		return block;
 	}
 
-	/** Функция цикличного побитового сдвига вправо
+	/** Функция цикличного побитового сдвига влево
 	 *
 	 * @param integer $block
 	 * @param integer $bits количество битов для сдвига
 	 * @return integer
 	 */
 	this.Global_BlockCycleShift = function(block, bits){
-		if(bits > 0){
-			var a = bits,
-				b = 32 - a;
-			
-			block = ((block >> a) & ~(-Math.pow(2,b)))^(block << b);
-		}
-		return block;
+		return bits > 0 ? (block<<bits)|(block>>>(32 - bits)) : bits;
 	}
 
 	/** Замена по таблице замен

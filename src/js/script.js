@@ -31,7 +31,7 @@ $(function(){
 		userGroup = 'debugGroup';
 
 		// Главное окно
-		getPage('main file', true);
+		getPage('main algolist', true);
 
 		toggleDisabled(true);
 	}
@@ -47,7 +47,7 @@ $(function(){
 		var parent = $(this).parent();
 		if(authorization($('input[name=name]', parent), $('input[name=group]', parent))){
 			// Главная страница
-			getPage('main file', true);
+			getPage('main algolist', true);
 
 			toggleDisabled(true);
 		}
@@ -56,16 +56,17 @@ $(function(){
 	// Главная
 	$('#navHome').on('click', function(){
 		dialogConfirm(function() {
-			getPage('main file', true);
+			getPage('main algolist', true);
 		});
 	});
 
+	/*
 	// Алгоритмы
 	$('#navAlgolist').on('click', function(){
 		getPage('algolist', true);
 	});
 
-	/* Открыть файл
+	// Открыть файл
 	$('#navFile').on('click', function(){
 		getPage('file', true);
 	});
@@ -174,15 +175,7 @@ function defaultWindow(name, title){
 			item.content += 'Привет, юный падаван!';
 			item.content += '<p>В этой программе я познакомлю тебя с различными криптографическими алгоритмами. Покажу, как как они работают и дам тебе почувствовать себя на месте каждого из них, словом, ты будешь шифровать информацию вручную!</p>';
 			item.content += '<p>Но не пугайся. К каждому алгоритму есть описание, которое поможет тебе решить задачу и порадовать преподавателя! :)</p>';
-			item.changeStyle({
-				top: 90,
-				left: 15,
-				bottom: 15,
-				width: '46%'
-			});
-			break;
-		case 'file':
-			item.title = 'Загрузка файла';
+			item.content += '<h3>Загрузка файла</h3>';
 			item.content += 'Чтобы загрузить файл, просто перетащи его в окно программы. ';
 			item.content += 'Но знай, есть несколько небольших ограничений.';
 			item.content += 'Файл должен иметь:<br />';
@@ -190,14 +183,13 @@ function defaultWindow(name, title){
 			item.content += '2) размер не более ' + fileMaxSize + ' КБ';
 			item.changeStyle({
 				top: 90,
-				left: '50%',
-				right: 15,
+				left: 15,
+				width: '46%',
 				bottom: 15
 			});
 			break;
 		case 'algolist':
-			item.title = 'Выбор алгоритма для шифрования';
-
+			// item.title = 'Выбор алгоритма для шифрования';
 			item.content += '<div class="algorithmType">Алгоритмы шифрования</div>';
 			item.content += '<div class="oneLevel">';
 				item.content += '<div class="algorithmSubtype">Симметричные</div>';
@@ -235,9 +227,9 @@ function defaultWindow(name, title){
 
 			item.changeStyle({
 				top: 90,
-				left: 15,
-				right: 15,
+				left: '50%',
 				bottom: 15,
+				right: 15,
 				backgroundColor: '#D9D9D9'
 			});
 			break;

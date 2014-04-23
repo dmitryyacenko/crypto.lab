@@ -79,7 +79,21 @@ function bin2dec(bin) {
 }
 // Перевод из десятичной системы в двоичную
 function dec2bin(dec) {
-	return dec.toString(2);
+	// Handler negtive number into binary.
+	// The code following is really meanless for number itself is depend on it's
+	// length. For instance, in bit operation, number will be treated as 32 bit.
+	// @see http://stackoverflow.com/questions/4338315/javascript-inverting-a-binary-value-of-a-number
+	if(dec >= 0) {
+        return dec.toString(2);
+    }
+    else {
+        //make the number positive
+        dec = Math.abs(dec);
+        //get the first compliment
+        var res = dec ^ parseInt((new Array(dec.toString(2).length+1)).join("1"),2);
+        //get the second complimet
+        return (res+1).toString(2);
+    }
 }
 // Перевод из десятичной системы в 16-ричную
 function dec2hex(n){
@@ -114,6 +128,7 @@ function getRandValue(min, max) {
 	return Math.round(min - 0.5 + Math.random()*(max-min+1));
 }
 
+
 // Получить случайную 64-битовую последовательность
 function getRandBin(bits, type) {
 	var result = { full: '', left: '', right: '', leftBit: 0, rightBit: 0 };
@@ -142,6 +157,15 @@ function getRandBin(bits, type) {
 	result.fullBit = parseInt(result.full, 2);
 
 	return result;
+}
+
+// Функция для дополнения двоичного кода нулями (строка на выходе)
+function getBinZero(bin, bits) {
+	var len = bin.length;
+	for(; len < bits; len++) {
+		bin = '0'+bin;
+	}
+	return bin;
 }
 
 // проверка правильного ввода
