@@ -60,17 +60,10 @@ $(function(){
 		});
 	});
 
-	/*
-	// Алгоритмы
-	$('#navAlgolist').on('click', function(){
-		getPage('algolist', true);
+	// О программе
+	$('#navInfo').on('click', function(){
+		getPage('info', true);
 	});
-
-	// Открыть файл
-	$('#navFile').on('click', function(){
-		getPage('file', true);
-	});
-	*/
 
 
 	// Открыть аккордеон
@@ -161,9 +154,9 @@ function defaultWindow(name, title){
 	switch(name){
 		case 'login':
 			item.title = 'Авторизация';
-			item.content += '<input name="name" type="text" placeholder="ФИО" />';
-			item.content += '<input name="group" type="text" placeholder="ГРУППА" />';
-			item.content += '<input type="submit" value="ОК" />';
+			item.content += '<input name="name" type="text" placeholder="ФИО" />'
+						+ '<input name="group" type="text" placeholder="ГРУППА" />'
+						+ '<input type="submit" value="ОК" />';
 			item.changeStyle({
 				top: 90,
 				left: 15,
@@ -172,15 +165,15 @@ function defaultWindow(name, title){
 			break;
 		case 'main':
 			item.title = 'Главная';
-			item.content += 'Привет, юный падаван!';
-			item.content += '<p>В этой программе я познакомлю тебя с различными криптографическими алгоритмами. Покажу, как как они работают и дам тебе почувствовать себя на месте каждого из них, словом, ты будешь шифровать информацию вручную!</p>';
-			item.content += '<p>Но не пугайся. К каждому алгоритму есть описание, которое поможет тебе решить задачу и порадовать преподавателя! :)</p>';
-			item.content += '<h3>Загрузка файла</h3>';
-			item.content += 'Чтобы загрузить файл, просто перетащи его в окно программы. ';
-			item.content += 'Но знай, есть несколько небольших ограничений.';
-			item.content += 'Файл должен иметь:<br />';
-			item.content += '1) расширение *.txt<br />';
-			item.content += '2) размер не более ' + fileMaxSize + ' КБ';
+			item.content += 'Привет, юный падаван!'
+						+ '<p>В этой программе я познакомлю тебя с различными криптографическими алгоритмами. Покажу, как как они работают и дам тебе почувствовать себя на месте каждого из них, словом, ты будешь шифровать информацию вручную!</p>'
+						+ '<p>Но не пугайся. К каждому алгоритму есть описание, которое поможет тебе решить задачу и порадовать преподавателя! :)</p>'
+						+ '<h3>Загрузка файла</h3>'
+						+ 'Чтобы загрузить файл, просто перетащи его в окно программы. '
+						+ 'Но знай, есть несколько небольших ограничений.'
+						+ 'Файл должен иметь:<br />'
+						+ '1) расширение *.txt<br />'
+						+ '2) размер не более ' + fileMaxSize + ' КБ';
 			item.changeStyle({
 				top: 90,
 				left: 15,
@@ -190,35 +183,35 @@ function defaultWindow(name, title){
 			break;
 		case 'algolist':
 			// item.title = 'Выбор алгоритма для шифрования';
-			item.content += '<div class="algorithmType">Алгоритмы шифрования</div>';
-			item.content += '<div class="oneLevel">';
-				item.content += '<div class="algorithmSubtype">Симметричные</div>';
-				item.content += '<div class="twoLevel">';
+			item.content += '<div class="algorithmType">Алгоритмы шифрования</div>'
+						+ '<div class="oneLevel">'
+							+ '<div class="algorithmSubtype">Симметричные</div>'
+							+ '<div class="twoLevel">';
 					for(k in algorithms.encryption.sym){
 						var name = algorithms.encryption.sym[k];
 						item.content += '<div data-name="'+name+'" data-type="encryption" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 					}
-				item.content += '</div>';
+				item.content += '</div>'
 
-				item.content += '<div class="algorithmSubtype">Асимметричные</div>';
-				item.content += '<div class="twoLevel">';
+							+ '<div class="algorithmSubtype">Асимметричные</div>'
+							+ '<div class="twoLevel">';
 					for(k in algorithms.encryption.asym){
 						var name = algorithms.encryption.asym[k];
 						item.content += '<div data-name="'+name+'" data-type="encryption" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 					}
-				item.content += '</div>';
-			item.content += '</div>';
+				item.content += '</div>'
+						+ '</div>'
 
-			item.content += '<div class="algorithmType">Алгоритмы ЭЦП</div>';
-			item.content += '<div class="oneLevel">';
+						+ '<div class="algorithmType">Алгоритмы ЭЦП</div>'
+						+ '<div class="oneLevel">';
 				for(k in algorithms.eds){
 					var name = algorithms.eds[k];
 					item.content += '<div data-name="'+name+'" data-type="eds" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 				}
-			item.content += '</div>';
+			item.content += '</div>'
 
-			item.content += '<div class="algorithmType">Алгоритмы распределения ключей</div>';
-			item.content += '<div class="oneLevel">';
+						+ '<div class="algorithmType">Алгоритмы распределения ключей</div>'
+						+ '<div class="oneLevel">';
 				for(k in algorithms.key){
 					var name = algorithms.key[k];
 					item.content += '<div data-name="'+name+'" data-type="key" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
@@ -231,6 +224,19 @@ function defaultWindow(name, title){
 				bottom: 15,
 				right: 15,
 				backgroundColor: '#D9D9D9'
+			});
+			break;
+		case 'info':
+			item.title = 'О программе';
+			item.content += '<h3>Система иследования алгоритмов защиты информации в сетях связи</h3>'
+						+ '<p>Программа разработана в рамках курсовой работы по дисциплине "Сети и системы связи и средства их защиты".</p>'
+						+ '<p>Разработка: Кирилловых Н.О. студент группы ТК-41-02</p>'
+						+ '<center>Киров 2014</center>';
+			item.changeStyle({
+				top: 90,
+				left: 15,
+				right: 15,
+				bottom: 15
 			});
 			break;
 		default:

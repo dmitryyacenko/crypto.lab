@@ -18,7 +18,7 @@ function algorithmBreak() {
 function algorithmFinal() {
 	processFile(function(){
 		algorithmBreak();
-		getPage('algolist', true);
+		getPage('main algolist', true);
 		dialogNotice('ok');
 	});
 }
