@@ -65,17 +65,8 @@ function GOST() {
 			SFullResult = getBinZero(getRandBin(32, '').full, 32),
 			result = SFullResult.substr(11) + SFullResult.substr(0, 11);
 
-		if(moduloBin.length < 32) {
-			for(var i = moduloBin.length; i < 32; i++) {
-				moduloBin = '0' + moduloBin;
-			}
-		}
-
-		if(SInner.length < 8) {
-			for(var i = SInner.length; i < 8; i++) {
-				SInner = '0' + SInner;
-			}
-		}
+		moduloBin = getBinZero(moduloBin, 32);
+		SInner = getBinZero(SInner, 8);
 
 		SFirstResult = S_BOX[0][hex2dec(SInner[0])];
 

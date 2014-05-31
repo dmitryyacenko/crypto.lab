@@ -1,0 +1,110 @@
+<div id='algorithmBox'>
+    <div>
+        <h2>1. Разбиение блока на четыре части</h2>
+        <img style='float: right; padding: 10px;' src="img/IDEA.jpg" alt="">
+        <p>Алгоритм IDEA состоит из восьми раундов, за которыми следует заключительное преобразование. Алгоритм разделяет блок на четыре 16-битных подблока. Каждый раунд получает на входе четыре 16- битных подблока и создает четыре 16-битных выходных подблока. Заключительное преобразование также получает на входе четыре 16-битных подблока и создает четыре 16-битных подблока. Каждый раунд использует шесть 16-битных ключей, заключительное преобразование использует четыре подключа, т.е. всего в алгоритме используется 52 подключа.
+        </p>
+        <p>Разбейте блок открытого текста на 4 подблока.</p>
+        
+        <p style='clear: right'>
+            <label>Блок открытого текста (64 бит)</label>
+            <input class='openBlock' type="text" readonly>
+            <input data-val='' class='AOpenBlock check' placeholder="A" type="text">
+            <input data-val='' class='BOpenBlock check' placeholder="B" type="text">
+            <input data-val='' class='COpenBlock check' placeholder="C" type="text">
+            <input data-val='' class='DOpenBlock check' placeholder="D" type="text">
+
+            <input data-destination='1' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>2. Первая часть раунда</h2>
+        <img style='float: right; padding: 10px;' src="img/IDEA_step1.jpg" alt="">
+        <p>На рисунке показана часть алгоритма. По входным данным (A, B, C, D) нужно расчитать 4 выходных значения ПОДСВЕЧЕННОЙ области. После усппешного расчета будет предложен следующий шаг (всего 4).
+        </p>
+        <p>
+            При умножении по модулю 2<sup>16</sup>+1 вместо 0 используется значение 2<sup>16</sup>
+        </p>
+        <p> Входные данные:<br>
+            1) <span class='innerA selectable'></span><br>
+            2) <span class='innerB selectable'></span><br>
+            3) <span class='innerC selectable'></span><br>
+            4) <span class='innerD selectable'></span><br>
+        </p>
+        <p> Ключи:<br>
+            1) <span class='key1 selectable'></span><br>
+            2) <span class='key2 selectable'></span><br>
+            3) <span class='key3 selectable'></span><br>
+            4) <span class='key4 selectable'></span><br>
+        </p>
+        <p>
+            <label>Значения на выходах:</label>
+            <input data-val='' class='out1 check' placeholder="1" type="text">
+            <input data-val='' class='out2 check' placeholder="2" type="text">
+            <input data-val='' class='out3 check' placeholder="3" type="text">
+            <input data-val='' class='out4 check' placeholder="4" type="text">
+
+            <input data-destination='2' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>3. Вторая часть раунда</h2>
+        <img style='float: right; padding: 10px;' src="img/IDEA_step2.jpg" alt="">
+        <p> Входные данные:<br>
+            1) <span class='innerA selectable'></span><br>
+            2) <span class='innerB selectable'></span><br>
+            3) <span class='innerC selectable'></span><br>
+            4) <span class='innerD selectable'></span><br>
+        </p>
+        <p>
+            <label>Значения на выходах:</label>
+            <input data-val='' class='out1 check' placeholder="1" type="text">
+            <input data-val='' class='out2 check' placeholder="2" type="text">
+            <input data-val='' class='out3 check' placeholder="3" type="text">
+            <input data-val='' class='out4 check' placeholder="4" type="text">
+            <input data-val='' class='out5 check' placeholder="5" type="text">
+            <input data-val='' class='out6 check' placeholder="6" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Третья часть раунда</h2>
+        <img style='float: right; padding: 10px;' src="img/IDEA_step3.jpg" alt="">
+        <p> Входные данные:<br>
+            1) <span class='innerA selectable'></span><br>
+            2) <span class='innerB selectable'></span><br>
+        </p>
+        <p> Ключи:<br>
+            5) <span class='key5 selectable'></span><br>
+            6) <span class='key6 selectable'></span><br>
+        </p>
+        <p>
+            <label>Значения на выходах:</label>
+            <input data-val='' class='out1 check' placeholder="1" type="text">
+            <input data-val='' class='out2 check' placeholder="2" type="text">
+            <input data-destination='4' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>5. Последняя часть раунда</h2>
+        <img style='float: right; padding: 10px;' src="img/IDEA_step4.jpg" alt="">
+        <p> Входные данные:<br>
+            1) <span class='innerA selectable'></span><br>
+            2) <span class='innerB selectable'></span><br>
+            3) <span class='innerC selectable'></span><br>
+            4) <span class='innerD selectable'></span><br>
+            5) <span class='innerE selectable'></span><br>
+            6) <span class='innerF selectable'></span><br>
+        </p>
+        <p>
+            <label>Значения на выходах:</label>
+            <input data-val='' class='out1 check' placeholder="1" type="text">
+            <input data-val='' class='out2 check' placeholder="2" type="text">
+            <input data-val='' class='out3 check' placeholder="3" type="text">
+            <input data-val='' class='out4 check' placeholder="4" type="text">
+            <input data-destination='final' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+</div>
+
+<script src="user/encryption-IDEA.js"></script>

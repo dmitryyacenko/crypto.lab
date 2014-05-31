@@ -50,6 +50,13 @@ function processFile(callback) {
 				result = gost.Decode(fileText, cryptoKey);
 			}
 		break;
+		case 'IDEA':
+			if(cryptoType == 'encryption') {
+				result = CryptoJS.TripleDES.encrypt(fileText, cryptoKey).toString();
+			} else if(cryptoType == 'decryption') {
+				result = CryptoJS.TripleDES.decrypt(fileText, cryptoKey).toString(CryptoJS.enc.Utf8);
+			}
+		break;
 	}
 	
 	fileWrite('out', result, callback);
@@ -85,8 +92,7 @@ function dec2bin(dec) {
 	// @see http://stackoverflow.com/questions/4338315/javascript-inverting-a-binary-value-of-a-number
 	if(dec >= 0) {
         return dec.toString(2);
-    }
-    else {
+    } else {
         //make the number positive
         dec = Math.abs(dec);
         //get the first compliment
@@ -131,7 +137,7 @@ function getRandValue(min, max) {
 
 // Получить случайную 64-битовую последовательность
 function getRandBin(bits, type) {
-	var result = { full: '', left: '', right: '', leftBit: 0, rightBit: 0 };
+	var result = { full: '', left: '', right: '', leftBit: 0, rightBit: 0, fourthParts: ['', '', '', ''] };
 
 	for(var i = 0, temp = ''; i < bits; i++){
 		temp = Math.round(Math.random()).toString();
@@ -146,8 +152,18 @@ function getRandBin(bits, type) {
 		} else {
 			if(i < bits/2) {
 				result.left += temp;
+				if(i < bits/4) {
+					result.fourthParts[0] += temp;
+				} else {
+					result.fourthParts[1] += temp;
+				}
 			} else {
 				result.right += temp;
+				if(i < 3*bits/4) {
+					result.fourthParts[2] += temp;
+				} else {
+					result.fourthParts[3] += temp;
+				}
 			}
 		}
 	}
