@@ -43,7 +43,7 @@ $(function(){
 
 	/* ОБРАБОТЧИКИ */
 	// Залогиниться
-	$('.login', content).on('click', 'input[type=submit]', function(){
+	$(content).on('click', '.login input[type=submit]', function(){	
 		var parent = $(this).parent();
 		if(authorization($('input[name=name]', parent), $('input[name=group]', parent))){
 			// Главная страница
@@ -228,9 +228,11 @@ function defaultWindow(name, title){
 			break;
 		case 'info':
 			item.title = 'О программе';
-			item.content += '<h3>Система иследования алгоритмов защиты информации в сетях связи</h3>'
-						+ '<p>Программа разработана в рамках курсовой работы по дисциплине "Сети и системы связи и средства их защиты".</p>'
-						+ '<p>Разработка: Кирилловых Н.О. студент группы ТК-41-02</p>'
+			item.content += '<h3><center>ПО для практических занятий по дисциплине "Основы криптографии"</center></h3>'
+						+ '<p>Программа разработана в рамках выпускной квалификационной работы по дисциплине "Основы криптографии".</p>'
+						+ '<p>Репозиторий программы: <a href="https://github.com/Craager/crypto.lab" target="_system">github.com/Craager/crypto.lab</a></p>'
+						+ '<p>Разработчик: Кирилловых Н.О. студент группы ТК-41-02</p>'
+						+ '<p>Руководитель: Харина Н.Л. к.т.н., доцент</p>'
 						+ '<center>Киров 2014</center>';
 			item.changeStyle({
 				top: 90,
@@ -291,29 +293,28 @@ function getPage(windows, clear){
 	})
 
 
-	// Очистка контента
-	if(clear){
-		content.empty();
-		$('<h2>').appendTo(content);
-	}
-
-	// Перебор и отрисовка запрошенных окон
-	for(k in windows){
-		var windowName = windows[k];
-
-		// Если окно ранее еще не создавалось
-		if(typeof allWindows[windowName] == 'undefined')
-			allWindows[windowName] = defaultWindow(windowName, k);
-
-		// Создает окно
-		allWindows[windowName].create();
-	}
-
-	// Заголовок
-	$('h2', content).html(allWindows[windows[0]].title);
-
-	// Плавное появление страницы
+	// Задержка перед отрисовкой новой страницы
 	setTimeout(function(){
+		// Очистка контента
+		if(clear){
+			content.empty();
+			$('<h2>').appendTo(content);
+		}
+
+		// Перебор и отрисовка запрошенных окон
+		for(k in windows){
+			var windowName = windows[k];
+
+			// Если окно ранее еще не создавалось
+			if(typeof allWindows[windowName] == 'undefined')
+				allWindows[windowName] = defaultWindow(windowName, k);
+
+			// Создает окно
+			allWindows[windowName].create();
+		}
+
+		// Заголовок
+		$('h2', content).html(allWindows[windows[0]].title);
 		// Инфа о юзере
 		if(userName && userGroup && !$('.user_info')[0]){
 			$('body').append('<div title="'+userName+' ('+userGroup+')" class="user_info"></div>')

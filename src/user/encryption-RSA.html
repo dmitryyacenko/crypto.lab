@@ -1,0 +1,83 @@
+<div id='algorithmBox'>
+    <div>
+        <h2>1. Генерация ключей - 1 этап</h2>
+        <p>Вычислить <i>n = p * q</i></p>
+        <p>
+            Исходные данные:<br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='nVal check' placeholder="n" type="text">
+            <input data-destination='1' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>2. Генерация ключей - 2 этап</h2>
+        <p>
+            Вычислить функцию Эйлера от числа <i>n</i>.<br>
+            <i>&Phi;(n) = (p - 1)(q - 1)</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='phi check' placeholder="&Phi;(n)" type="text">
+            <input data-destination='2' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>3. Генерация ключей - 3 этап</h2>
+        <p>
+            Подобрать целое число <i>e</i>, взаимно простое со значением функции <i>&Phi;(n)</i> и удовлетворяющее условию:<br>
+            <i>1 < e < &Phi;(n)</i>;
+        </p>
+        <p> Исходные данные:<br>
+            <i>&Phi;(n) = <span class="phi"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='eVal check' placeholder="e" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Генерация ключей - 4 этап</h2>
+        <p>
+            Вычислить число <i>d</i>, мультипликативно обратное к числу <i>e</i> по модулю <i>&Phi;(n)</i>, то есть число, удовлетворяющее условию:
+            <br><i>d * e &equiv; 1 mod &Phi;(n)</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>e = <span class="e"></span></i>;<br>
+            <i>&Phi;(n) = <span class="phi"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='dVal check' placeholder="d" type="text">
+            <input data-destination='4' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>5. Шифрование</h2>
+        <p>
+            Зашифровать сообщение с использованием открытого ключа:
+            <br><i>c = E(m) = m<sup>e</sup> mod n</i>;
+        </p>
+        <p>
+            Сгенерированные ключи:
+            <ul>
+                <li>Открытый: {e, n} => {<span class="e"></span>, <span class="n"></span>};</li>
+                <li>Закрытый: {d, n} => {<span class="d"></span>, <span class="n"></span>};</li>
+            </ul>
+            Сообщение m = <span class="m"></span>;
+        </p>
+        <p></p>
+        <p>
+            <input data-val='' class='cVal check' placeholder="c" type="text">
+            <input data-destination='final' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+</div>
+
+<script src="user/encryption-RSA.js"></script>

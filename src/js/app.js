@@ -71,6 +71,13 @@ $(function(){
 
 	/* ОБРАБОТЧИКИ */
 
+	// Обработка клика по ссылкам
+	$('body').on('click', 'a[target=_system]', function(e){
+		gui.Shell.openExternal($(this).attr('href'));
+		e.preventDefault();
+		e.stopPropagation();
+	});
+
 	// Обработка развертывания окна
 	win.on('maximize', function() {
 		if(maximizeApp.hasClass('maximizeApp'))

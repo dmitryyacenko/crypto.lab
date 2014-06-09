@@ -22,66 +22,75 @@
 </form>
 
 <script>
-	var $algoSettings = $('#algoSettings');
+	// ajax запрос на страницу с исследованием алгоритма
+	function getManual(page, fade) {
+		$.ajax({
+		    url: 'user/' + page + '.html',
+		    success: function (data) {
+		    	$('.' + page).fadeOut(animSpeed*fade, function() {
+		    		$(this).html(data).fadeIn(animSpeed*fade);
+		    	});
+		    }
+		});
+	}
 
-	// Заполнить поля
-	$algoSettings.find('#'+cryptoMode).attr('checked', 'checked');
-	$algoSettings.find('#'+cryptoType).attr('checked', 'checked');
-	$algoSettings.find('input[name=key]').val(cryptoKey);
+	if(/eds/.test(curPage)) {
+		getManual(curPage, 0);
+	} else {
+		var $algoSettings = $('#algoSettings');
 
-	// Проверка на ввод ключа
-	$algoSettings.on('input', 'input[type=text]', function() {
-		var next = $('input[type=submit]', $algoSettings);
-		if($(this).val() == 0) {
-			next.attr('disabled', 'disabled');
-		} else {
-			next.removeAttr('disabled');
+		// Заполнить поля
+		$algoSettings.find('#'+cryptoMode).attr('checked', 'checked');
+		$algoSettings.find('#'+cryptoType).attr('checked', 'checked');
+		$algoSettings.find('input[name=key]').val(cryptoKey);
+
+		// Проверка на ввод ключа
+		$algoSettings.on('input', 'input[type=text]', function() {
+			var next = $('input[type=submit]', $algoSettings);
+			if($(this).val() == 0) {
+				next.attr('disabled', 'disabled');
+			} else {
+				next.removeAttr('disabled');
+			}
+		});
+
+		// Начало
+		$algoSettings.on('click', 'input[type=submit]', function(){
+			var serial = strSplit('=', '&', $('#algoSettings').serialize());
+
+			cryptoMode = serial.mode;
+			cryptoType = serial.type;
+			cryptoKey = serial.key;
+
+			if(serial.mode == 'manual') {
+				getManual(curPage, 1);
+			} else {
+				algorithmFinal();
+			}
+
+			return false;
+		});
+
+		// Распарсить GET строку на переменные
+		// http://falkon303.wordpress.com/2012/11/27/parsing-jquery-serialization-get-variables-using-javascript/
+		function strSplit(start, end, string) {
+			array_ret = new Array();
+			valArray = new Array();
+
+			for (var i=0;i<string.split(start).length;i++) {
+				array_ret.push(string.split(end)[i]);
+			}
+
+			for (var j=0;j<array_ret.length-1;j++) {
+				valArray.push(array_ret[j].split(start)[1]);
+			}
+
+			array_ret.length = 0;
+			return {
+				mode: valArray[0],
+				type: valArray[1],
+				key: valArray[2]
+			};
 		}
-	});
-
-	// Начало
-	$algoSettings.on('click', 'input[type=submit]', function(){
-		var serial = strSplit('=', '&', $('#algoSettings').serialize());
-
-		cryptoMode = serial.mode;
-		cryptoType = serial.type;
-		cryptoKey = serial.key;
-
-		if(serial.mode == 'manual') {
-			$.ajax({
-			    url: 'user/' + curPage + '.html',
-			    success: function (data) {
-			    	$('.' + curPage).fadeOut(animSpeed, function() {
-			    		$(this).html(data).fadeIn(animSpeed);
-			    	});
-			    }
-			});
-		} else {
-			algorithmFinal();
-		}
-
-		return false;
-	});
-
-	// Распарсить GET строку на переменные
-	// http://falkon303.wordpress.com/2012/11/27/parsing-jquery-serialization-get-variables-using-javascript/
-	function strSplit(start, end, string) {
-		array_ret = new Array();
-		valArray = new Array();
-
-		for (var i=0;i<string.split(start).length;i++) {
-			array_ret.push(string.split(end)[i]);
-		}
-
-		for (var j=0;j<array_ret.length-1;j++) {
-			valArray.push(array_ret[j].split(start)[1]);
-		}
-
-		array_ret.length = 0;
-		return {
-			mode: valArray[0],
-			type: valArray[1],
-			key: valArray[2]
-		};
 	}
 </script>
