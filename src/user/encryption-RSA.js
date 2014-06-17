@@ -1,30 +1,6 @@
 algorithmStart();
 
 function RSA() {
-	var simpleFind = function(N) {
-		var p = 0,
-			q = 0,
-			nonsimple = true;
-		while(nonsimple){
-			var i = Math.floor((Math.random()*N)+2),
-				stop = false;
-			
-			if(i > 2) for(var j = i-1; j >= 1; j--){
-				if(!stop){
-					var temp = i/j;
-					if(temp % 1 === 0 && j != 1) stop = true;
-					if(!stop && j == 1) {
-						if(p == 0) p = i;
-						else if(i != p) {
-							q = i;
-							nonsimple = false;
-						}
-					}
-				}
-			}
-		}
-		return {p: p, q: q};
-	}
 	this.checkSimple = function(one, two) {
 		if(one <=1 || two <= 1 || one == two || (one / two) % 1 === 0 || (two / one) % 1 === 0)
 			return false;

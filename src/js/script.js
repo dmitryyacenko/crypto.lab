@@ -15,7 +15,7 @@ var userName = '', // Имя пользователя
 	cryptoKey = 'mySecretKey', // Стандартный секретный ключ для алгоритмов
 	cryptoMode = 'manual', // Режим прохождения алгоритмов [manual, auto]
 	cryptoType = 'encryption', // Тип шифрования [encryption, decryption]
-	cryptoName = '', // Название выбранного алгоритма
+	cryptoName = [], // Массив = [Тип выбранного алгоритма, Название выбранного алгоритма]
 
 	content = '', // 
 
@@ -165,12 +165,11 @@ function defaultWindow(name, title){
 			break;
 		case 'main':
 			item.title = 'Главная';
-			item.content += 'Привет, юный падаван!'
-						+ '<p>В этой программе я познакомлю тебя с различными криптографическими алгоритмами. Покажу, как как они работают и дам тебе почувствовать себя на месте каждого из них, словом, ты будешь шифровать информацию вручную!</p>'
-						+ '<p>Но не пугайся. К каждому алгоритму есть описание, которое поможет тебе решить задачу и порадовать преподавателя! :)</p>'
+			item.content += '<p>Уважаемый пользователь, в этой программе вам предлагается ознакомиться с различными криптографическими алгоритмами. Вы будете шифровать информацию вручную!</p>'
+						+ '<p>К каждому алгоритму есть описание, которое поможет решить задачу.</p>'
 						+ '<h3>Загрузка файла</h3>'
-						+ 'Чтобы загрузить файл, просто перетащи его в окно программы. '
-						+ 'Но знай, есть несколько небольших ограничений.'
+						+ 'Чтобы загрузить файл, просто перетащите его в окно программы. '
+						+ 'Есть несколько небольших ограничений.'
 						+ 'Файл должен иметь:<br />'
 						+ '1) расширение *.txt<br />'
 						+ '2) размер не более ' + fileMaxSize + ' КБ';
@@ -189,7 +188,7 @@ function defaultWindow(name, title){
 							+ '<div class="twoLevel">';
 					for(k in algorithms.encryption.sym){
 						var name = algorithms.encryption.sym[k];
-						item.content += '<div data-name="'+name+'" data-type="encryption" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
+						item.content += '<div data-name="'+k+'" data-type="encryption" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 					}
 				item.content += '</div>'
 
@@ -197,7 +196,7 @@ function defaultWindow(name, title){
 							+ '<div class="twoLevel">';
 					for(k in algorithms.encryption.asym){
 						var name = algorithms.encryption.asym[k];
-						item.content += '<div data-name="'+name+'" data-type="encryption" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
+						item.content += '<div data-name="'+k+'" data-type="encryption" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 					}
 				item.content += '</div>'
 						+ '</div>'
@@ -206,7 +205,7 @@ function defaultWindow(name, title){
 						+ '<div class="oneLevel">';
 				for(k in algorithms.eds){
 					var name = algorithms.eds[k];
-					item.content += '<div data-name="'+name+'" data-type="eds" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
+					item.content += '<div data-name="'+k+'" data-type="eds" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 				}
 			item.content += '</div>'
 
@@ -214,7 +213,7 @@ function defaultWindow(name, title){
 						+ '<div class="oneLevel">';
 				for(k in algorithms.key){
 					var name = algorithms.key[k];
-					item.content += '<div data-name="'+name+'" data-type="key" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
+					item.content += '<div data-name="'+k+'" data-type="key" class="algorithmItem">'+name+'<span class="algorithmInfoIcon"></span></div>';
 				}
 			item.content += '</div>';
 
@@ -228,7 +227,7 @@ function defaultWindow(name, title){
 			break;
 		case 'info':
 			item.title = 'О программе';
-			item.content += '<h3><center>ПО для практических занятий по дисциплине "Основы криптографии"</center></h3>'
+			item.content += '<h3><center>Практическое занятие по дисциплине «Основы криптографии»</center></h3>'
 						+ '<p>Программа разработана в рамках выпускной квалификационной работы по дисциплине "Основы криптографии".</p>'
 						+ '<p>Репозиторий программы: <a href="https://github.com/Craager/crypto.lab" target="_system">github.com/Craager/crypto.lab</a></p>'
 						+ '<p>Разработчик: Кирилловых Н.О. студент группы ТК-41-02</p>'
@@ -242,8 +241,8 @@ function defaultWindow(name, title){
 			});
 			break;
 		default:
-			item.title = name.split('-')[1];
-			cryptoName = item.title;
+			cryptoName = name.split('-');
+			item.title = cryptoName[1];
 
 			item.content += '<script>'
 			item.content += '$.ajax({';

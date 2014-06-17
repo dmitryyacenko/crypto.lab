@@ -1,0 +1,127 @@
+<div id='algorithmBox'>
+    <div>
+        <h2>1. Генерация общих параметров</h2>
+        <p>Вначале для некоторого сообщества пользователей выбираются общие несекретные параметры <i>p</i> и <i>q</i><br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;
+        </p>
+        <p>
+            Затем выбирается число <i>a > 1</i>, такое, что:<br>
+            <i>a <sup>q</sup> mod p = 1</i>;
+        </p>
+        <p>
+            <input data-val='' class='a check' placeholder="a" type="text">
+            <input data-destination='1' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>2. Получение ключей</h2>
+        <p>
+            Каждый пользователь выбирает случайно число <i>x</i>, удовлетворяющее неравенству <i>0 < x < q</i> и вычисляет:<br>
+            <i>y = a <sup>x</sup> mod p</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>x = <span class="x"></span></i>;<br>
+            <i>a = <span class="a"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            Число <i>x</i> является секретным ключом, <i>y</i> - открытым.
+        </p>
+        <p>
+            <input data-val='' class='y check' placeholder="y" type="text">
+            <input data-destination='2' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>3. Подпись - 1 этап</h2>
+        <p>
+            Формируется случайное число <i>k</i> с условиями <i>0 < k < q</i>. Вычислить:<br>
+            <i>r = (a <sup>k</sup> mod p) mod q</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>a = <span class="a"></span></i>;<br>
+            <i>k = <span class="k"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='r check' placeholder="r" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Подпись - 2 этап</h2>
+        <p>
+            Вычислить:<br>
+            <i>s = (k * hash + x * r) mod q</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>k = <span class="k"></span></i>;<br>
+            <i>hash = <span class="hash"></span></i>;<br>
+            <i>x = <span class="x"></span></i>;<br>
+            <i>r = <span class="r"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='s check' placeholder="s" type="text">
+            <input data-destination='4' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>5. Проверка подписи - 1 этап</h2>
+        <p>
+            Вычислить:<br>
+            <i>hash <sup>-1</sup> = <span class="hash"></span> <sup>-1</sup> mod <span class="q"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='hash1 check' placeholder="hash-1" type="text">
+            <input data-destination='5' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>6. Проверка подписи - 2 этап</h2>
+        <p>
+            Полученное сообщение: <i>{hash; r, s} = {<span class="hash"></span>; <span class="r"></span>, <span class="s"></span>}</i>. В первую очередь проверяется выполнение неравенств <i>0 < r < q, 0 < s < q</i>. Если они выполняются, нужно расчитать:<br>
+            <i>u<sub>1</sub> = s * hash <sup>-1</sup> mod q</i>;<br>
+            <i>u<sub>2</sub> = -r * hash <sup>-1</sup> mod q</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>s = <span class="s"></span></i>;<br>
+            <i>r = <span class="r"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;<br>
+            <i>hash <sup>-1</sup> = <span class="hash1"></span></i>;<br>
+        </p>
+        <p>
+            <input data-val='' class='u1 check' placeholder="u1" type="text">
+            <input data-val='' class='u2 check' placeholder="u2" type="text">
+            <input data-destination='6' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>7. Проверка подписи - 3 этап</h2>
+        <p>
+            Вычислить:
+            <br><i>v = (a<sup>u<sub>1</sub></sup> y<sup>u<sub>2</sub></sup> mod p) mod q</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>a = <span class="a"></span></i>;<br>
+            <i>y = <span class="y"></span></i>;<br>
+            <i>u<sub>1</sub> = <span class="u1"></span></i>;<br>
+            <i>u<sub>2</sub> = <span class="u2"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>q = <span class="q"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='r check' placeholder="v" type="text">
+            <input data-destination='final' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+</div>
+
+<script src="user/eds-GOST.js"></script>

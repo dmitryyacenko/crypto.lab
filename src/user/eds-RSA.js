@@ -1,30 +1,6 @@
 algorithmStart();
 
 function RSA() {
-	var simpleFind = function(N) {
-		var p = 0,
-			q = 0,
-			nonsimple = true;
-		while(nonsimple){
-			var i = Math.floor((Math.random()*N)+2),
-				stop = false;
-			
-			if(i > 2) for(var j = i-1; j >= 1; j--){
-				if(!stop){
-					var temp = i/j;
-					if(temp % 1 === 0 && j != 1) stop = true;
-					if(!stop && j == 1) {
-						if(p == 0) p = i;
-						else if(i != p) {
-							q = i;
-							nonsimple = false;
-						}
-					}
-				}
-			}
-		}
-		return {p: p, q: q};
-	}
 	var getHash = function(m, n) {
 		var result;
 		for(var k in m)
@@ -32,31 +8,8 @@ function RSA() {
 
 		return result;
 	}
-	this.checkSimple = function(one, two) {
-		if(one <=1 || two <= 1 || one == two || (one / two) % 1 === 0 || (two / one) % 1 === 0)
-			return false;
-		for(var j = Math.min(one, two); j > 1; j--){
-			if((one / j) % 1 === 0 && (two / j) % 1 === 0)
-				return false;
-		}
-		return true;
-	}
 	this.checkD = function(d) {
 		return (this.e * d) % this.phi == 1;
-	}
-	this.megaModulo = function(h, d, n) {
-		var b = 1;
-
-		while (d) {
-			if (d%2 == 0) {
-				d /= 2;
-				h = (h * h) % n;
-			} else {
-				d--;
-				b = (b * h) % n;
-			}
-		}
-		return b;
 	}
 
 	this.inner = simpleFind(17);
@@ -68,7 +21,6 @@ function RSA() {
 
 // Получение всех расчитанных данных по алгоритму
 var rsa = new RSA();
-console.log(rsa);
 
 // Первый шаг
 (function() {
@@ -117,7 +69,7 @@ console.log(rsa);
 	$block.on('input', 'input[type=text]', function() {
 		var userVal = $(this).val();
 
-		if(userVal % 1 === 0 && userVal > 1 && userVal < rsa.phi && rsa.checkSimple(rsa.phi, userVal)) {
+		if(userVal % 1 === 0 && userVal > 1 && userVal < rsa.phi && checkSimple(rsa.phi, userVal)) {
 			rsa.e = userVal;
 			$block.find('.eVal').attr('data-val', rsa.e);
 			$('#algorithmBox .e').html(rsa.e);
@@ -140,7 +92,7 @@ console.log(rsa);
 
 		if(userVal % 1 === 0 && rsa.checkD(userVal)) {
 			rsa.d = userVal;
-			rsa.S = rsa.megaModulo(rsa.hash, rsa.d, rsa.n);
+			rsa.S = moduloM(rsa.hash, rsa.d, rsa.n);
 
 
 			$block.find('.dVal').attr('data-val', rsa.d);

@@ -4,7 +4,7 @@ var curInfo = '';
 function algorithmStart() {
 	toggleDisabled(false);
 	checkExit = true;
-	curInfo = $('<div data-name="DES" data-type="encryption" class="curInfo"><span class="algorithmInfoIcon"></span></div>');
+	curInfo = $('<div data-name="'+cryptoName[1]+'" data-type="'+cryptoName[0]+'" class="curInfo"><span class="algorithmInfoIcon"></span></div>');
 
 	$('body').append(curInfo);
 }
@@ -31,11 +31,11 @@ function processFile(callback) {
 	cryptoKey // Стандартный секретный ключ для алгоритмов
 	cryptoMode // Режим прохождения алгоритмов [manual, auto]
 	cryptoType // Тип шифрования [encryption, decryption]
-	cryptoName // Название выбранного алгоритма
+	cryptoName[1] // Название выбранного алгоритма
 	*/
 	var result = '';
 
-	switch(cryptoName) {
+	switch(cryptoName[1]) {
 		case 'DES':
 			if(cryptoType == 'encryption') {
 				result = CryptoJS.TripleDES.encrypt(fileText, cryptoKey).toString();
@@ -63,6 +63,64 @@ function processFile(callback) {
 }
 
 
+// Функция возведения числа в степень по модулю
+// (a^b) mod c
+function moduloM(a, b, c) {
+	var r = 1;
+
+	while (b) {
+		if (b%2 == 0) {
+			b /= 2;
+			a = (a * a) % c;
+		} else {
+			b--;
+			r = (r * a) % c;
+		}
+	}
+	return r;
+}
+
+// проверка на числовое значение
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+// поиск 2 взаимно простых чисел
+var simpleFind = function(N) {
+	var p = 0,
+		q = 0,
+		nonsimple = true;
+	while(nonsimple){
+		var i = Math.floor((Math.random()*N)+2),
+			stop = false;
+		
+		if(i > 2) for(var j = i-1; j >= 1; j--){
+			if(!stop){
+				var temp = i/j;
+				if(temp % 1 === 0 && j != 1) stop = true;
+				if(!stop && j == 1) {
+					if(p == 0) p = i;
+					else if(i != p) {
+						q = i;
+						nonsimple = false;
+					}
+				}
+			}
+		}
+	}
+	return {p: p, q: q};
+}
+
+// Функция для проверки 2 чисел на взаимную простоту
+function checkSimple(one, two) {
+	if(one <=1 || two <= 1 || one == two || (one / two) % 1 === 0 || (two / one) % 1 === 0)
+		return false;
+	for(var j = Math.min(one, two); j > 1; j--){
+		if((one / j) % 1 === 0 && (two / j) % 1 === 0)
+			return false;
+	}
+	return true;
+}
 
 // Функция сложения по модулю два
 function moduloTwo(one, two) {
@@ -183,6 +241,7 @@ function getBinZero(bin, bits) {
 	}
 	return bin;
 }
+
 
 // проверка правильного ввода
 // autocomplete - автоматически дозаполнить поле, если numAutoComplete символов введено верно

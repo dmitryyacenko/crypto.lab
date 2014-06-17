@@ -1,0 +1,92 @@
+<div id='algorithmBox'>
+    <div>
+        <h2>1. Генерация числа <i>g</i></h2>
+        <p>Для легкого поиска числа <i>g</i> нужно подобрать такие простые числа <i>p</i> и <i>q</i>, чтобы выполнялось следующее условие:<br>
+            <i>p = 2q + 1</i>;
+        </p>
+        <p>
+            Тогда в качестве g можно взять любое число, для которого справедливы неравенства:<br>
+            <i>1 < g < p - 1</i>;<br>
+            <i>g <sup>q</sup> mod p &ne; 1</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>p = <span class="p"></span>;</i><br>
+            <i>q = <span class="q"></span>;</i>
+        </p>
+        <p>
+            <input data-val='' class='g check' placeholder="g" type="text">
+            <input data-destination='1' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>2. Генерация случайных значений</h2>
+        <p>
+            Предположим, существует два абонента: Алиса и Боб. Обоим абонентам известны два числа <i>g</i> и <i>p</i>, которые не являются секретными и могут быть известны также другим заинтересованным лицам. Для того, чтобы создать неизвестный более никому секретный ключ, оба абонента генерируют большие случайные числа: Алиса — число a, Боб — число b.
+        </p>
+        <p>
+            Записать 2 различных случайных числа в пределах от 3 до 50 (возьмите маленькие числа для простоты расчетов).
+        </p>
+        <p>
+            <input data-val='' class='a check' placeholder="a" type="text">
+            <input data-val='' class='b check' placeholder="b" type="text">
+            <input data-destination='2' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>3. Генерация индивидуальных последовательностей и обмен</h2>
+        <p>
+            Алиса вычисляет<br>
+            <i>A = g <sup>a</sup> mod p</i>
+        </p>
+        <p>
+            Боб вычисляет<br>
+            <i>B = g <sup>b</sup> mod p</i>
+        </p>
+        <p>
+            И обмениваются полученными значениями. Предполагается, что злоумышленник может получить оба этих значения, но не модифицировать их (то есть у него нет возможности вмешаться в процесс передачи).
+        </p>
+        <p> Исходные данные:<br>
+            <i>g = <span class="g"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>a = <span class="a"></span></i>;<br>
+            <i>b = <span class="b"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='aBig check' placeholder="A" type="text">
+            <input data-val='' class='bBig check' placeholder="B" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Вычисление секретного ключа</h2>
+        <p>
+            Алиса на основе имеющегося у нее <i>a</i> и полученного по сети <i>B</i> вычисляет значение:<br>
+            <i>B <sup>a</sup> mod p</i>; (1)
+        </p>
+        <p>
+            Боб на основе имеющегося у него <i>b</i> и полученного по сети <i>A</i> вычисляет значение:<br>
+            <i>A <sup>b</sup> mod p</i>; (2)
+        </p>
+        <p>
+            Если расписать оба этих выражения, они окажутся равны:<br>
+            <i>K = g<sup>ab</sup> mod p</i>
+        </p>
+        <p>
+            Алиса и Боб могут использовать <i>K</i> в качестве секретного ключа, поскольку здесь злоумышленник встретится с практически неразрешимой (за разумное время) проблемой вычисления (1) или (2) по перехваченным <i>g <sup>a</sup> mod p</i> и <i>g <sup>b</sup> mod p</i>, если числа <i>p</i>, <i>a</i>, <i>b</i> выбраны достаточно большими.
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>g = <span class="g"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;<br>
+            <i>a = <span class="a"></span></i>;<br>
+            <i>b = <span class="b"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='K check' placeholder="K" type="text">
+            <input data-destination='final' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+</div>
+
+<script src="user/key-DiffieHellman.js"></script>

@@ -1,0 +1,146 @@
+<div id='algorithmBox'>
+    <div>
+        <h2>1. Поиск взаимно простых чисел</h2>
+        <p>
+            Предварительный этап необходим для выбора параметров протокола. Участники выбирают несекретное большое простое число <i>p</i><br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            Затем Алиса выбирает случайно число <i>c<sub>A</sub></i>, взаимно простое с <i>p-1</i>. Независимо и аналогично Боб выбирает случайно число <i>c<sub>B</sub></i>, взаимно простое с <i>p-1</i>.
+        </p>
+        <p>
+            <input data-val='' class='Ca check' placeholder="Ca" type="text">
+            <input data-val='' class='Cb check' placeholder="Cb" type="text">
+            <input data-destination='1' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>2. Поиск пары чисел</h2>
+        <p>
+            Теперь Алиса и Боб должны вычислить <i>d<sub>A</sub></i> и <i>d<sub>B</sub></i> по обобщенному алгоритму Евклида.
+        </p>
+        <p>
+            Алиса: <i>c<sub>A</sub> d<sub>A</sub> mod (p - 1) = 1</i>;<br>
+            Боб: <i>c<sub>B</sub> d<sub>B</sub> mod (p - 1) = 1</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>c<sub>A</sub> = <span class="Ca"></span></i>;<br>
+            <i>c<sub>B</sub> = <span class="Cb"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            Алиса держит в секрете числа <i>c<sub>A</sub></i> и <i>d<sub>A</sub></i>. 
+            Боб держит в секрете числа <i>c<sub>B</sub></i> и <i>d<sub>B</sub></i>
+        </p>
+        <p>
+            <input data-val='' class='Da check' placeholder="Da" type="text">
+            <input data-val='' class='Db check' placeholder="Db" type="text">
+            <input data-destination='2' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>3. Выбор случайных карт</h2>
+        <p>
+            Алиса выбирает случайно 3 различных числа <i>alpha</i>, <i>beta</i>, <i>gamma</i> в промежутке от <i>1</i> до <i>p-1</i> в открытом виде и передает их Бобу.<br>
+        </p>
+        <p>
+            <input data-val='' class='alpha check' placeholder="alpha" type="text">
+            <input data-val='' class='beta check' placeholder="beta" type="text">
+            <input data-val='' class='gamma check' placeholder="gamma" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Раздача карт - шаг 1</h2>
+        <p>
+            Алиса вычисляет числа:<br>
+            <i>u<sub>1</sub> = alpha <sup>c<sub>A</sub></sup> mod p</i>;<br>
+            <i>u<sub>2</sub> = beta <sup>c<sub>A</sub></sup> mod p</i>;<br>
+            <i>u<sub>3</sub> = gamma <sup>c<sub>A</sub></sup> mod p</i>;
+        </p>
+        <p>И высылает их Бобу, предварительно перемешав случайным образом.</p>
+        <p>
+            Исходные данные:<br>
+            <i>alpha = <span class="alpha"></span></i>;<br>
+            <i>beta = <span class="beta"></span></i>;<br>
+            <i>gamma = <span class="gamma"></span></i>;<br>
+            <i>c<sub>A</sub> = <span class="Ca"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='u1 check' placeholder="u1" type="text">
+            <input data-val='' class='u2 check' placeholder="u2" type="text">
+            <input data-val='' class='u3 check' placeholder="u3" type="text">
+            <input data-destination='4' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>5. Раздача карт - шаг 2</h2>
+        <p>
+            Боб получает 3 числа и выбирает случайно одно из них, например <i>u<sub>2</sub></i> и отправляет его Алисе. Это и будет карта, которая достанется ей в процессе раздачи. Алиса, получив сообщение может вычислить какой карте соответствует принятое от Боба число:<br>
+            <i>u<sub>alice</sub> = u<sub>2</sub><sup>d<sub>A</sub></sup> mod p</i>;<br>
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>u<sub>2</sub> = <span class="u2"></span></i>;<br>
+            <i>d<sub>A</sub> = <span class="Da"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='beta check' placeholder="Ualice" type="text">
+            <input data-destination='5' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>6. Раздача карт - шаг 3</h2>
+        <p>
+            Боб продолжает свои действия, он вычисляет для оставшихся двух чисел:<br>
+            <i>v<sub>1</sub> = u<sub>1</sub><sup>c<sub>B</sub></sup> mod p</i>;<br>
+            <i>v<sub>3</sub> = u<sub>3</sub><sup>c<sub>B</sub></sup> mod p</i>;
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>u<sub>1</sub> = <span class="u1"></span></i>;<br>
+            <i>u<sub>3</sub> = <span class="u3"></span></i>;<br>
+            <i>c<sub>B</sub> = <span class="Cb"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            С вероятностью 1/2 он переставляет эти два числа и отправляет Алисе.
+        </p>
+        <p>
+            <input data-val='' class='v1 check' placeholder="v1" type="text">
+            <input data-val='' class='v3 check' placeholder="v3" type="text">
+            <input data-destination='6' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>7. Раздача карт - шаг 4</h2>
+        <p>
+            Алиса выбирает случайно одно из полученных чисел, например <i>v<sub>1</sub></i> и вычисляет число:<br>
+            <i>w<sub>1</sub> = v<sub>1</sub><sup>d<sub>A</sub></sup> mod p</i>;
+        </p>
+        <p>
+            И отправляет это число обратно Бобу. Боб вычисляет число:<br>
+            <i>z</sub> = w<sub>1</sub><sup>d<sub>B</sub></sup> mod p</i>;
+        </p>
+        <p>
+            И узнает свою карту. Оставшаяся карта остается в прикупе.
+        </p>
+        <p>
+            Исходные данные:<br>
+            <i>v<sub>1</sub> = <span class="v1"></span></i>;<br>
+            <i>d<sub>A</sub> = <span class="Da"></span></i>;<br>
+            <i>d<sub>B</sub> = <span class="Db"></span></i>;<br>
+            <i>p = <span class="p"></span></i>;
+        </p>
+        <p>
+            <input data-val='' class='w1 check' placeholder="w1" type="text">
+            <input data-val='' class='z check' placeholder="z" type="text">
+            <input data-destination='final' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+</div>
+
+<script src="user/key-MentalPoker.js"></script>
