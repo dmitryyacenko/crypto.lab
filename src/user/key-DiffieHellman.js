@@ -3,7 +3,7 @@ algorithmStart();
 function DH() {
 	var findPQ = function(min, max) {
 		while(true) {
-			var q = simpleFind(max);
+			var q = simpleFind(max).q;
 			if(q > min && q < max)
 				return {p: 2*q + 1, q: q}
 		}

@@ -40,26 +40,13 @@
         </p>
     </div>
     <div style='display: none'>
-        <h2>3. Выбор случайных карт</h2>
-        <p>
-            Алиса выбирает случайно 3 различных числа <i>alpha</i>, <i>beta</i>, <i>gamma</i> в промежутке от <i>1</i> до <i>p-1</i> в открытом виде и передает их Бобу.<br>
-        </p>
-        <p>
-            <input data-val='' class='alpha check' placeholder="alpha" type="text">
-            <input data-val='' class='beta check' placeholder="beta" type="text">
-            <input data-val='' class='gamma check' placeholder="gamma" type="text">
-            <input data-destination='3' type="submit" value="Далее" disabled>
-        </p>
-    </div>
-    <div style='display: none'>
-        <h2>4. Раздача карт - шаг 1</h2>
+        <h2>3. Раздача карт - шаг 1</h2>
         <p>
             Алиса вычисляет числа:<br>
             <i>u<sub>1</sub> = alpha <sup>c<sub>A</sub></sup> mod p</i>;<br>
             <i>u<sub>2</sub> = beta <sup>c<sub>A</sub></sup> mod p</i>;<br>
             <i>u<sub>3</sub> = gamma <sup>c<sub>A</sub></sup> mod p</i>;
         </p>
-        <p>И высылает их Бобу, предварительно перемешав случайным образом.</p>
         <p>
             Исходные данные:<br>
             <i>alpha = <span class="alpha"></span></i>;<br>
@@ -72,18 +59,37 @@
             <input data-val='' class='u1 check' placeholder="u1" type="text">
             <input data-val='' class='u2 check' placeholder="u2" type="text">
             <input data-val='' class='u3 check' placeholder="u3" type="text">
+            <input data-destination='3' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>4. Отправка Бобу - шаг 2</h2>
+        <p>
+            Алиса пермешивает числа, которые получила на предыдущем шаге и отправляет их Бобу.<br>
+        </p>
+        <p>Правило перемешивания - <i>123 -> 231</i></p>
+        <p>
+            Исходные данные:<br>
+            <i>u<sub>1</sub> = <span class="u1"></span></i>;<br>
+            <i>u<sub>2</sub> = <span class="u2"></span></i>;<br>
+            <i>u<sub>3</sub> = <span class="u3"></span></i>;<br>
+        </p>
+        <p>
+            <input data-val='' class='u2 check' placeholder="" type="text">
+            <input data-val='' class='u3 check' placeholder="" type="text">
+            <input data-val='' class='u1 check' placeholder="" type="text">
             <input data-destination='4' type="submit" value="Далее" disabled>
         </p>
     </div>
     <div style='display: none'>
-        <h2>5. Раздача карт - шаг 2</h2>
+        <h2>5. Раздача карт - шаг 3</h2>
         <p>
-            Боб получает 3 числа и выбирает случайно одно из них, например <i>u<sub>2</sub></i> и отправляет его Алисе. Это и будет карта, которая достанется ей в процессе раздачи. Алиса, получив сообщение может вычислить какой карте соответствует принятое от Боба число:<br>
-            <i>u<sub>alice</sub> = u<sub>2</sub><sup>d<sub>A</sub></sup> mod p</i>;<br>
+            Боб получает 3 числа и выбирает случайно одно из них, например <i>первое</i> и отправляет его Алисе. Это и будет карта, которая достанется ей в процессе раздачи. Алиса, получив сообщение может вычислить какой карте соответствует принятое от Боба число:<br>
+            <i>u<sub>alice</sub> = u<sub>bob1</sub><sup>d<sub>A</sub></sup> mod p</i>;<br>
         </p>
         <p>
             Исходные данные:<br>
-            <i>u<sub>2</sub> = <span class="u2"></span></i>;<br>
+            <i>u<sub>bob1</sub> = <span class="u2"></span></i>;<br>
             <i>d<sub>A</sub> = <span class="Da"></span></i>;<br>
             <i>p = <span class="p"></span></i>;
         </p>
@@ -93,7 +99,7 @@
         </p>
     </div>
     <div style='display: none'>
-        <h2>6. Раздача карт - шаг 3</h2>
+        <h2>6. Раздача карт - шаг 4</h2>
         <p>
             Боб продолжает свои действия, он вычисляет для оставшихся двух чисел:<br>
             <i>v<sub>1</sub> = u<sub>1</sub><sup>c<sub>B</sub></sup> mod p</i>;<br>
@@ -107,36 +113,50 @@
             <i>p = <span class="p"></span></i>;
         </p>
         <p>
-            С вероятностью 1/2 он переставляет эти два числа и отправляет Алисе.
-        </p>
-        <p>
             <input data-val='' class='v1 check' placeholder="v1" type="text">
             <input data-val='' class='v3 check' placeholder="v3" type="text">
             <input data-destination='6' type="submit" value="Далее" disabled>
         </p>
     </div>
     <div style='display: none'>
-        <h2>7. Раздача карт - шаг 4</h2>
+        <h2>7. Отправка Алисе - шаг 5</h2>
         <p>
-            Алиса выбирает случайно одно из полученных чисел, например <i>v<sub>1</sub></i> и вычисляет число:<br>
-            <i>w<sub>1</sub> = v<sub>1</sub><sup>d<sub>A</sub></sup> mod p</i>;
+            Боб с вероятностью 1/2 переставляет два числа, которые получил на предыдущем шаге и отправляет их Алисе.<br>
+        </p>
+        <p>Правило перемешивания - <i>12 -> 21</i></p>
+        <p>
+            Исходные данные:<br>
+            <i>v<sub>1</sub> = <span class="v1"></span></i>;<br>
+            <i>v<sub>3</sub> = <span class="v3"></span></i>;<br>
+        </p>
+        <p>
+            <input data-val='' class='v3 check' placeholder="" type="text">
+            <input data-val='' class='v1 check' placeholder="" type="text">
+            <input data-destination='7' type="submit" value="Далее" disabled>
+        </p>
+    </div>
+    <div style='display: none'>
+        <h2>8. Раздача карт - шаг 6</h2>
+        <p>
+            Алиса выбирает случайно одно из полученных чисел, например <i>второе</i> и вычисляет число:<br>
+            <i>w = v<sub>alice2</sub><sup>d<sub>A</sub></sup> mod p</i>;
         </p>
         <p>
             И отправляет это число обратно Бобу. Боб вычисляет число:<br>
-            <i>z</sub> = w<sub>1</sub><sup>d<sub>B</sub></sup> mod p</i>;
+            <i>z</sub> = w<sup>d<sub>B</sub></sup> mod p</i>;
         </p>
         <p>
             И узнает свою карту. Оставшаяся карта остается в прикупе.
         </p>
         <p>
             Исходные данные:<br>
-            <i>v<sub>1</sub> = <span class="v1"></span></i>;<br>
+            <i>v<sub>alice2</sub> = <span class="v1"></span></i>;<br>
             <i>d<sub>A</sub> = <span class="Da"></span></i>;<br>
             <i>d<sub>B</sub> = <span class="Db"></span></i>;<br>
             <i>p = <span class="p"></span></i>;
         </p>
         <p>
-            <input data-val='' class='w1 check' placeholder="w1" type="text">
+            <input data-val='' class='w1 check' placeholder="w" type="text">
             <input data-val='' class='z check' placeholder="z" type="text">
             <input data-destination='final' type="submit" value="Далее" disabled>
         </p>
