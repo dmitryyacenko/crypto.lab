@@ -242,7 +242,12 @@ function defaultWindow(name, title){
 			break;
 		default:
 			cryptoName = name.split('-');
-			item.title = cryptoName[1];
+			if(cryptoName[0] == 'encryption') {
+				item.title = algorithms.encryption.sym[cryptoName[1]] || algorithms.encryption.asym[cryptoName[1]];
+			} else {
+				item.title = algorithms[cryptoName[0]][cryptoName[1]];
+			}
+			console.log(item.title);
 
 			item.content += '<script>'
 			item.content += '$.ajax({';
